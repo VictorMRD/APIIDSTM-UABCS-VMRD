@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Practica 1 - Tarea 2</title>
+
+    <style>
+        body{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 90vh;
+            background: radial-gradient(circle at center, 
+            white, rgb(29, 104, 190), black),100% ;
+        }
+        #myCanvas{
+            background-color: white;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="myCanvas" width="500" height="500"></canvas>
+    <script>
+        const canvas = document.getElementById("myCanvas");
+        const ctx = canvas.getContext("2d");
+
+        ctx.beginPath();
+        ctx.fillStyle = "lightblue";
+        ctx.fillRect(20,20,100,100);
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.fillStyle = "red";
+        ctx.fillRect(60,60,100,100);
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.fillStyle = "yellow";
+        ctx.fillRect(100,100,100,100);
+        ctx.stroke();
+    </script>
+</body>
+</html>
