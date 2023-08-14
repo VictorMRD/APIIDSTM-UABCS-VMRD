@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Dibujando Ando</title>
+        <style>
+            body{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-direction: column;
+            }
+        </style>
+    </head>
+    <body>
+        Este es mi canvas
+        <canvas id="myCanvas" width="400" height="400" style="border:1px solid #000000;">
+        </canvas>
+        <script>
+            var c = document.getElementById("myCanvas");
+            var ctx = c.getContext("2d");
+
+            ctx.moveTo(40,200);
+            ctx.lineTo(100,300);
+            ctx.stroke();
+            //Se usa el BeginPath para crear un camino con diferentes puntos
+            //De esta manera podemos hacer figuras diferentes con la idea de
+            //Aplicar funciones especiales de este mismo tipo de objetos en ella
+            //Cómo poder rellenarla
+            ctx.beginPath();
+            //El MoveTo usa (X,Y) para moverle el lapiz sin dibujar en el canvas
+            ctx.moveTo(225,100);
+            // el LineTo se usa para dibujar una linea desde la posición actual
+            // del punto hasta dónde se destine
+            ctx.lineTo(185,265);
+            ctx.lineTo(125,265);
+            ctx.stroke();
+            ctx.fill();
+            //Esto ya no es obligatorio, pero aún así puede ser utilizado
+            //ctx.closePath();
+
+            //pacman
+            ctx.beginPath();
+            ctx.fillStyle = "yellow";
+            ctx.arc(80, 80, 50, 1, 2 * Math.PI);
+            ctx.lineTo(90,80);
+            ctx.stroke();
+            ctx.fill();
+            ctx.beginPath();
+            ctx.fillStyle = "black";
+            ctx.arc(90, 50, 5, 0, 2 * Math.PI);
+            ctx.stroke();
+            ctx.fill();
+
+            //arc(X, Y,angulo inicial, angulo final, )
+            //circulo 1
+            ctx.beginPath();
+            ctx.arc(320, 70, 50, 0, 2 * Math.PI);
+            ctx.stroke();
+            //circulo 2
+            ctx.beginPath();
+            ctx.fillStyle = "orange";
+            ctx.arc(320, 200, 50, 0, 2 * Math.PI);
+            ctx.stroke();
+            ctx.fill();
+
+
+        </script>
+    </body>
+</html>
