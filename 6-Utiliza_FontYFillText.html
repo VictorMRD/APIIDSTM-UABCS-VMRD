@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <canvas id="myCanvas" width="300" height="150" style="border:1px solid grey"></canvas>
+
+    <script>
+    const c = document.getElementById("myCanvas");
+    const ctx = c.getContext("2d");
+
+    ctx.font = "40px Georgia";
+    ctx.fillText("Hola Mundo", 40, 80);
+    ctx.font = "30px Verdana";
+    
+    ctx.font = "40px Georgia";
+    ctx.strokeText("Hola Mundo", 42, 85);
+    ctx.font = "30px Verdana";
+    </script>
+</body>
+</html>
