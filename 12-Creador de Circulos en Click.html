@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Act_9</title>
+    <style>
+        #myCanvas{
+            background-color: white;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="myCanvas" width="1800" height="800px" style="border:1px solid #000000;">
+        Your browser does not support the HTML canvas tag.
+    </canvas>
+    <script>
+        const c = document.getElementById("myCanvas");
+        const ctx = c.getContext("2d");
+
+        let canvas = document.getElementById("myCanvas");
+        canvas.addEventListener("click", (e)=>{
+            console.log("Click utilizando funcion anonima");
+            ctx.beginPath();
+            console.log(e.layerX + " " + e.layerY);
+            ctx.arc(e.layerX, e.layerY, 50, 0, 2 * Math.PI);
+            ctx.fillStyle = "Orange";
+            ctx.stroke();
+            ctx.fill();
+        })
+        /*function mclick(){
+            console.log("Click utlizanod una funcion");
+        }*/
+    </script>
+</body>
+</html>
