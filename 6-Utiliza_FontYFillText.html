@@ -6,20 +6,26 @@
     <title>Document</title>
 </head>
 <body>
-    
+    bro
     <canvas id="myCanvas" width="300" height="150" style="border:1px solid grey"></canvas>
 
     <script>
     const c = document.getElementById("myCanvas");
     const ctx = c.getContext("2d");
 
-    ctx.font = "40px Georgia";
-    ctx.fillText("Hola Mundo", 40, 80);
-    ctx.font = "30px Verdana";
-    
-    ctx.font = "40px Georgia";
-    ctx.strokeText("Hola Mundo", 42, 85);
-    ctx.font = "30px Verdana";
+    ctx.font = "20px Georgia";
+    ctx.fillText("Hello World!", 10, 50);
+    ctx.font = "30px Verdana";s
+
+    // Create gradient
+    var gradient = ctx.createLinearGradient(0, 0, c.width, 0);
+    gradient.addColorStop("0", "magenta");
+    gradient.addColorStop("0.5", "blue");
+    gradient.addColorStop("1.0", "red");
+
+    // Fill with gradient
+    ctx.fillStyle = gradient;
+    ctx.fillText("Big smile!", 10, 90);
     </script>
 </body>
 </html>
