@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script>
+        function draw() {
+            console.log("drawing");
+            const c = document.getElementById("myCanvas");
+            const ctx = c.getContext("2d");
+            const img = document.getElementById("luna");
+            ctx.drawImage(img, 0, 0, c.width, c.height);
+        }
+    </script>
+</head>
+<body onload="draw()">
+    <img id="luna" src="luna.jpg" alt="The Scream" width="220" height="277">
+    
+    <canvas id="myCanvas" width="500" height="500" style="border: 1px solid grey;"></canvas>
+</body>
+</html>
