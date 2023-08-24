@@ -10,7 +10,6 @@
         <script>
             const canvas = document.getElementById("myCanvas");
             const ctx = canvas.getContext("2d");
-            let x =220, y = 210;
             let rx = 0, ry= 0;
             let color;
 
@@ -21,7 +20,8 @@
             function displayFigure(){
                 ctx.beginPath();
                 ctx.fillStyle = color;
-                ctx.fillRect(rx,ry,50,50);
+                ctx.rect(rx,ry,50,50);
+                ctx.fill();
                 ctx.stroke();
             }
             function randomColors(){
@@ -30,7 +30,7 @@
             }
 
             function generar(){
-                randomCords();
+                //randomCords();
                 color = randomColors();
                 displayFigure();
             }
@@ -38,15 +38,19 @@
             document.addEventListener("keydown", (e)=> {
                     switch(e.keyCode){
                         case 87:
+                            ry -=10;
                             generar();
                             break;
                         case 83:
+                            ry +=10;
                             generar();
                             break;
                         case 65:
+                            rx -=10;
                             generar();
                             break;
                         case 68:
+                            rx +=10;
                             generar();
                             break;
                     }
