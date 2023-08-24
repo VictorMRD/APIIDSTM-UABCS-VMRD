@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+    <body>
+        <canvas id="myCanvas" width="500" height="500" style="border: 1px solid grey;"></canvas>
+        <script>
+            const canvas = document.getElementById("myCanvas");
+            const ctx = canvas.getContext("2d");
+            let x =220, y = 210;
+            let rx = 0, ry= 0;
+            let color;
+
+            function randomCords(){
+                rx = Math.floor(Math.random() * 450);
+                ry = Math.floor(Math.random() * 450);
+            }
+            function displayFigure(){
+                ctx.beginPath();
+                ctx.fillStyle = color;
+                ctx.fillRect(rx,ry,50,50);
+                ctx.stroke();
+            }
+            function randomColors(){
+                var o = Math.round, r = Math.random, s = 255;
+                return 'rgba(' + o(r()*s) + ',' + o(r()*s) + ',' + o(r()*s) + ',' + r().toFixed(1) + ')';
+            }
+
+            function generar(){
+                randomCords();
+                color = randomColors();
+                displayFigure();
+            }
+
+            document.addEventListener("keydown", (e)=> {
+                    switch(e.keyCode){
+                        case 87:
+                            generar();
+                            break;
+                        case 83:
+                            generar();
+                            break;
+                        case 65:
+                            generar();
+                            break;
+                        case 68:
+                            generar();
+                            break;
+                    }
+            })
+        </script>
+    
+    </body>    
+</html>
