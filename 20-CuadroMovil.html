@@ -10,7 +10,7 @@
         <script>
             const canvas = document.getElementById("myCanvas");
             const ctx = canvas.getContext("2d");
-            let rx = 0, ry= 0;
+            let rx = 220, ry= 210;
             let color;
 
             function randomCords(){
@@ -28,9 +28,16 @@
                 var o = Math.round, r = Math.random, s = 255;
                 return 'rgba(' + o(r()*s) + ',' + o(r()*s) + ',' + o(r()*s) + ',' + r().toFixed(1) + ')';
             }
-
+            function repintarFondo(){
+                ctx.beginPath();
+                ctx.fillStyle = "white";
+                ctx.rect(0,0,500,500);
+                ctx.fill();
+                ctx.stroke();
+            }
             function generar(){
                 //randomCords();
+                repintarFondo();
                 color = randomColors();
                 displayFigure();
             }
