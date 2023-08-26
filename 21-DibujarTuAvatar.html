@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+    <body>
+        <canvas id="myCanvas" width="1500" height="900" style="border: 1px solid grey;"></canvas>
+        <script>
+            const canvas = document.getElementById("myCanvas");
+            const ctx = canvas.getContext("2d");
+            let width = 1500;
+            let height = 900;
+            fondo();
+            function fondo(){
+                ctx.beginPath();
+                ctx.fillStyle = "gray";
+                ctx.rect(0,0,width,height);
+                ctx.fill();
+            }
+            espiral();
+            function espiral(){
+                for(let y = 20; y>0; y--){
+                    for(let x = 20; x>0; x--){
+                        ctx.beginPath();
+                        if(x%2 == 0)
+                            ctx.fillStyle = "white";
+                        else
+                            ctx.fillStyle = "black";
+                        for (let index = 0; index < array.length; index++) {
+                            ctx.arc(200+(x*10), 200-(y*10), 100+(y+x), 0, 2 * Math.PI);
+                        }
+                        ctx.lineWidth = 0;
+                        ctx.fill(); 
+                        ctx.stroke();
+                    }
+                }
+
+                //Cono de circulos
+                /*for(let y = 0; y<100; y++){
+                    for(let x = 0; x<100; x++){
+                        ctx.beginPath();
+                        if(x%2 == 0)
+                            ctx.fillStyle = "white";
+                        else
+                            ctx.fillStyle = "black";
+                        ctx.arc(105+(x*10), 300-(y), 100-(y+x), 0, 2 * Math.PI);
+                        ctx.lineWidth = 0;
+                        ctx.fill(); 
+                        ctx.stroke();
+                    }
+                }*/
+
+            }
+
+                //fondo de cuadrados chistosos
+                /*for(let y = 0; y*100<900; y++){
+                    for(let x = 0; x*100<width; x++){
+                        for(let i = 0; i*100<1000; i++){
+                            ctx.beginPath();
+                            if(i == 9)
+                                ctx.fillStyle = "white";
+                            else
+                                ctx.fillStyle = "black";
+                            ctx.rect(0+(i*3)+(x*127),0+(i*3)+(y*127),100,100);
+                            ctx.fill();   
+                        }
+                    }
+                }
+                //PRIMER CUADRO
+                for(let y = 0; y*100<height; y++){
+                    for(let x = 0; x*100<width; x++){
+                        for(let i = 0; i*100<1000; i++){
+                            ctx.beginPath();
+                            if(i == 9)
+                                ctx.fillStyle = "white";
+                            else
+                                ctx.fillStyle = "black";
+                            ctx.rect(88+(i*5)+(x*127),80+(i*3)+(y*127),20,20);
+                            ctx.fill();   
+                        }
+                    }
+                }
+                for(let y = 0; y*100<height; y++){
+                    for(let x = 0; x*100<width; x++){
+                        for(let i = 0; i*100<1000; i++){
+                            ctx.beginPath();
+                            if(i == 9)
+                                ctx.fillStyle = "white";
+                            else
+                                ctx.fillStyle = "black";
+                            ctx.rect(80+(i*5)+(x*127),30+(i*3)+(y*127),20,20);
+                            ctx.fill();   
+                        }
+                    }
+                }
+                for(let y = 0; y*100<height; y++){
+                    for(let x = 0; x*100<width; x++){
+                        for(let i = 0; i*100<1000; i++){
+                            ctx.beginPath();
+                            if(i == 9)
+                                ctx.fillStyle = "white";
+                            else
+                                ctx.fillStyle = "black";
+                            ctx.rect(28+(i*5)+(x*127),80+(i*3)+(y*127),20,20);
+                            ctx.fill();   
+                        }
+                    }
+                }
+                for(let y = 0; y*100<height; y++){
+                    for(let x = 0; x*100<width; x++){
+                        for(let i = 0; i*100<1000; i++){
+                            ctx.beginPath();
+                            if(i == 9)
+                                ctx.fillStyle = "white";
+                            else
+                                ctx.fillStyle = "black";
+                            ctx.rect(28+(i*5)+(x*127),30+(i*3)+(y*127),20,20);
+                            ctx.fill();   
+                        }
+                    }
+                }*/
+        </script>
+    
+    </body>    
+</html>
+
