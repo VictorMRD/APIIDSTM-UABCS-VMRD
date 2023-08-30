@@ -8,16 +8,58 @@
 <body>
     <canvas id="myCanvas" width="1470" height="800" style="border: 2px solid black"></canvas>
 	<script>
+	//A esto le tenemos que agregar un objeto jugador
+	//Y un objeto muro?
 		const canvas = document.getElementById("myCanvas");
 		const ctx = canvas.getContext("2d");
-		let y = 250, x=250, w=150;
+		let y = 250, x=250, w=100, w2=800;
 		let dir = 0;
         let bandera = true;
+
+		class Wall {
+			constructor(x,y,width, height){
+				this.width = width;
+				this.height = height;
+				this.x = x;
+				this.y = y;
+			}
+
+			constructor(width, height){
+				this.width = width;
+				this.height = height;
+				this.x = (Math.floor(Math.random() * 1270));
+				this.y = (Math.floor(Math.random() * 600));
+			}
+
+			get xpos() {
+				return this.x;
+			}
+
+			get ypos() {
+				return this.y;
+			}
+
+			get width(){
+				return this.x;
+			}
+
+			get height(){
+				return this.x;
+			}
+		}
+
+		class Player {
+			constructor(x,y,width, height){
+				this.width = width;
+				this.height = height;
+			}
+		}
+
         //Obstaculos posiciones
         let cuadrados = [];
         //rellenar arreglo de obstaculos
-        for (let index = 0; index < 10; index++) {
-            cuadrados.push([(Math.floor(Math.random() * 1470)),(Math.floor(Math.random() * 800)),(Math.floor(Math.random() * 200))]); 
+        for (let index = 0; index < 2; index++) {
+            cuadrados.push([(Math.floor(Math.random() * 1470)),(Math.floor(Math.random() * 800)),w,w2]); 
         }
 
         //Aca pintamos los elementos
