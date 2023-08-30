@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fondo</title>
+</head>
+    <body>
+        <canvas id="myCanvas" width="1470" height="790" style="border: 2px solid black"></canvas>
+        <script>
+            const canvas = document.getElementById("myCanvas");
+            const ctx = canvas.getContext("2d");
+            let rgb;
+
+            //FONDO
+            ctx.beginPath();
+            ctx.fillRect(0,0,1470,790);
+            ctx.fillStyle = "black";
+            ctx.closePath();
+
+            //ESTRELLAS
+            let tamano = 7;
+            let centro = tamano/2;
+            let firstl;
+            let secondl;
+            let thirdl;
+            let fourthl;
+            let fifthl;
+            let sixthl;
+            let seventhl;
+            let eigthl;
+            let ninthl;
+            let tenthl ;
+
+
+            function dibujarEstrelas(){
+                for (let index = 0; index < 200; index++) {
+                     x = Math.random() * 1470;
+                     y = Math.random() * 790; 
+                     firstl = { x: x, y: y };
+                     secondl = { x: firstl.x + centro, y: firstl.y };
+                     thirdl = { x: secondl.x + centro/2, y: secondl.y - centro };
+                     fourthl = { x: thirdl.x + centro/2 , y: thirdl.y + centro };
+                     fifthl = { x: fourthl.x + centro, y: fourthl.y };
+                     sixthl = { x: fourthl.x + centro/4 , y: fourthl.y + centro/1.3 };
+                     seventhl = { x: thirdl.x + centro * 1.2 , y: sixthl.y + centro };
+                     eigthl = { x: thirdl.x , y: sixthl.y + centro/3 };
+                     ninthl = { x: thirdl.x - centro , y: sixthl.y + centro };
+                     tenthl = { x: secondl.x - centro/4 , y: secondl.y + centro/1.3 };
+                    
+                    ctx.beginPath();
+                    ctx.moveTo(firstl.x, firstl.y);
+                    ctx.lineTo(secondl.x, secondl.y);
+                    ctx.lineTo(thirdl.x, thirdl.y);
+                    ctx.lineTo(fourthl.x, fourthl.y);
+                    ctx.lineTo(fifthl.x, fifthl.y);
+                    ctx.lineTo(sixthl.x, sixthl.y);
+                    ctx.lineTo(seventhl.x, seventhl.y);
+                    ctx.lineTo(eigthl.x, eigthl.y);
+                    ctx.lineTo(ninthl.x, ninthl.y);
+                    ctx.lineTo(tenthl.x, tenthl.y);
+                    
+                    const randomColor = "rgb(255," + Math.floor(Math.random() * 256) + ", " + Math.floor(Math.random() * 256) + ")";
+                    ctx.fillStyle = randomColor;
+                    ctx.fill();
+                    ctx.stroke();
+                }
+            }
+            
+            dibujarEstrelas();
+                dibujarEstrelas();  
+
+            function drawMountain(x, y, width, height, color) {
+                ctx.beginPath();
+                ctx.moveTo(x, y);
+                ctx.lineTo(x + width / 2, y - height);
+                ctx.lineTo(x + width, y);
+                ctx.closePath();
+                ctx.fillStyle = color;
+                ctx.fill();
+            }
+
+                drawMountain(210, canvas.height, 300, 300, "#353535");
+                drawMountain(200, canvas.height, 300, 300, "#888");
+                drawMountain(510, canvas.height, 400, 400, "#353535");
+                drawMountain(500, canvas.height, 400, 400, "#555");
+                drawMountain(910, canvas.height, 600, 600, "#353500");
+                drawMountain(900, canvas.height, 600, 600, "#333");
+
+                //Luna
+                ctx.beginPath();
+                ctx.arc(1300, 100, 50, 0, Math.PI * 2);
+                ctx.fillStyle = "lightgray";
+                ctx.fill();
+                ctx.closePath();
+
+                ctx.beginPath();
+                ctx.arc(1290, 75, 15, 0, Math.PI * 2);
+                ctx.fillStyle = "gray";
+                ctx.fill();
+                ctx.closePath();
+                
+                ctx.beginPath();
+                ctx.arc(1270, 100, 10, 0, Math.PI * 2);
+                ctx.fillStyle = "gray";
+                ctx.fill();
+                ctx.closePath();
+
+                ctx.beginPath();
+                ctx.arc(1320, 125, 10, 0, Math.PI * 2);
+                ctx.fillStyle = "gray";
+                ctx.fill();
+                ctx.closePath();
+        </script>
+    </body>
+</html>
