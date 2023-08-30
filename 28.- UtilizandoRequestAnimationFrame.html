@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -126,4 +127,137 @@
 		window.requestAnimationFrame(update);
 	</script>
 </body>
+=======
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <canvas id="myCanvas" width="1470" height="800" style="border: 2px solid black"></canvas>
+	<script>
+		const canvas = document.getElementById("myCanvas");
+		const ctx = canvas.getContext("2d");
+		let y = 250, x=250, w=150;
+		let dir = 0;
+        let bandera = true;
+        //Obstaculos posiciones
+        let cuadrados = [
+            [0,0,0],
+            [0,0,0],
+            [0,0,0],
+            [0,0,0],
+            [0,0,0],
+            [0,0,0],
+            [0,0,0],
+            [0,0,0],
+            [0,0,0],
+            [0,0,0],
+            [0,0,0],
+            [0,0,0],
+            [0,0,0],
+            [0,0,0],
+            [0,0,0],
+            [0,0,0],
+            [0,0,0],
+        ];
+        //rellenar arreglo de obstaculos
+        for (let index = 0; index < 15; index++) {
+            cuadrados[index][0] = (Math.floor(Math.random() * 1470));
+            cuadrados[index][1] = (Math.floor(Math.random() * 800));
+            cuadrados[index][2] = (Math.floor(Math.random() * 200));
+            
+        }
+
+        //Aca pintamos los elementos
+		function repaint(){
+			ctx.beginPath();
+			ctx.fillStyle = "white";
+			ctx.rect(0, 0, 1470, 800);
+			ctx.fill();
+
+            //Obstaculos
+            for (let index = 0; index < cuadrados.length; index++) {
+                ctx.beginPath();
+			    ctx.fillStyle = "black";
+                ctx.rect(cuadrados[index][0], cuadrados[index][1], cuadrados[index][2], cuadrados[index][2]);
+                ctx.fill();
+            }
+			
+
+			draw();
+		}
+        //
+		function draw(){
+			ctx.beginPath();
+			ctx.fillStyle = "black";
+			ctx.rect(x, y, w, w);
+			ctx.stroke();
+		}
+
+		document.addEventListener("keydown", function (e){
+			
+			console.log(e.keyCode);
+			switch(e.keyCode){
+				case 87:
+					dir = e.keyCode;
+					break;
+				case 83:
+					dir = e.keyCode;
+					break;
+				case 68:
+					dir = e.keyCode;
+					break;
+				case 65:
+					dir = e.keyCode;
+					break;
+			}
+		});
+
+		function update(){
+            //
+            for(let findex = 0; findex < cuadrados.length; findex++){
+                if(x < cuadrados[findex][0] + cuadrados[findex][2] &&  x + w > cuadrados[findex][0] && 
+                   y < cuadrados[findex][1] + cuadrados[findex][2] &&  y + w > cuadrados[findex][1]){
+                         cuadrados[findex][0] = (Math.floor(Math.random() * 1470));
+                         cuadrados[findex][1] = (Math.floor(Math.random() * 800));
+                         repaint();
+                }   
+            }
+			switch(dir){
+				case 87:
+					y-= 10;
+					if(y<0) {y=800} else if(y>800){y=0}
+					break;
+				case 83:
+					y+= 10;
+					if(y<0) {y=800} else if(y>800){y=0}
+					break;
+				case 68:
+					x+= 10;
+					if(x<0) {x=1470} else if(x>1470){x=0}
+					break;
+				case 65:
+					x-= 10;
+					if(x<0) {x=1470} else if(x>1470){x=0}
+					break;
+			}
+			repaint();
+			window.requestAnimationFrame(update);
+		}
+
+		window.requestAnimationFrame = (function () {
+			return window.requestAnimationFrame ||
+				window.webkitRequestAnimationFrame ||
+				window.mozRequestAnimationFrame ||
+				function (callback) {
+					window.setTimeout(callback, 17);
+				};
+		}());
+		window.requestAnimationFrame(update);
+	</script>
+</body>
+>>>>>>> a1c5906ffa146310cac32df923f73f49018b96dc
 </html>
