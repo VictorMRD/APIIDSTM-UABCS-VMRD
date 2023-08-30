@@ -17,34 +17,43 @@
         let bandera = true;
 
 		class Wall {
-			constructor(x,y,width, height){
-				this.width = width;
-				this.height = height;
-				this.x = x;
-				this.y = y;
+			constructor(_x,_y,_width, _height){
+				this.width = _width;
+				this.height = _height;
+				this.x = _x;
+				this.y = _y;
 			}
 
-			constructor(width, height){
-				this.width = width;
-				this.height = height;
-				this.x = (Math.floor(Math.random() * 1270));
-				this.y = (Math.floor(Math.random() * 600));
+			set xpos(_x) {
+				this.x = _x;
 			}
 
-			get xpos() {
+			set ypos(_y) {
+				this.y = _y;
+			}
+
+			set wallWidth(_width){
+				this.width = _width;
+			}
+
+			set wallHeight(_height){
+				this.height = _height;
+			}
+
+			get xPos() {
 				return this.x;
 			}
 
-			get ypos() {
+			get yPos() {
 				return this.y;
 			}
 
-			get width(){
-				return this.x;
+			get getWidth(){
+				return this.width;
 			}
 
-			get height(){
-				return this.x;
+			get getHeight(){
+				return this.height;
 			}
 		}
 
@@ -55,12 +64,12 @@
 			}
 		}
 
-        //Obstaculos posiciones
-        let cuadrados = [];
-        //rellenar arreglo de obstaculos
+		let wall1 = new Wall(800,100,100,100);
+		/*
         for (let index = 0; index < 2; index++) {
             cuadrados.push([(Math.floor(Math.random() * 1470)),(Math.floor(Math.random() * 800)),w,w2]); 
         }
+		*/
 
         //Aca pintamos los elementos
 		function repaint(){
@@ -69,17 +78,23 @@
 			ctx.rect(0, 0, 1470, 800);
 			ctx.fill();
 
+			
             //Obstaculos
+			/*
             for (let index = 0; index < cuadrados.length; index++) {
                 ctx.beginPath();
 			    ctx.fillStyle = "black";
                 ctx.rect(cuadrados[index][0], cuadrados[index][1], cuadrados[index][2], cuadrados[index][2]);
                 ctx.fill();
             }
-			
+			*/
+			ctx.beginPath();
+			ctx.fillStyle = "black";
+			ctx.rect(wall1.xpos, wall1.ypos,wall1.width, wall1.height);
 
 			draw();
 		}
+
         //
 		function draw(){
 			ctx.beginPath();
@@ -89,7 +104,6 @@
 		}
 
 		document.addEventListener("keydown", function (e){
-			
 			console.log(e.keyCode);
 			switch(e.keyCode){
 				case 87:
@@ -109,8 +123,9 @@
 
         let flag = false;
 		function update(){
-            //
-            for(let findex = 0; findex < cuadrados.length; findex++){
+
+            //detector de colisiones
+            /*for(let findex = 0; findex < cuadrados.length; findex++){
                 if(x < cuadrados[findex][0] + cuadrados[findex][2] &&  x + w > cuadrados[findex][0] && 
                    y < cuadrados[findex][1] + cuadrados[findex][2] &&  y + w > cuadrados[findex][1]){
                          cuadrados[findex][0] = (Math.floor(Math.random() * 1470));
@@ -119,6 +134,16 @@
                          repaint();
                 }   
             }
+			*/
+
+			for(let findex = 0; findex < 1; findex++){
+                if(x < wall1.xpos + wall1.width &&  x + w > wall1.xpos && 
+                   y < wall1.ypos + wall1.height &&  y + w > wall1.ypos){
+                         repaint();
+                }   
+            }
+			
+
 			switch(dir){
 				case 87:
                     if(flag){
