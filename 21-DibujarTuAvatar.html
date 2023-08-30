@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+    <body>
+        <canvas id="myCanvas" width="800" height="930" style="border: 1px solid grey;"></canvas>
+        <script>
+            const canvas = document.getElementById("myCanvas");
+            const ctx = canvas.getContext("2d");
+            let width = 1500;
+            let height = 900;
+
+
+            function espiralInversa() {
+                let canvas = document.getElementById("myCanvas");
+                let ctx = canvas.getContext("2d");
+                
+                let X = canvas.width/2;
+                let Y = canvas.height/2;
+                let rad = 600;
+                let angulo = 0;
+                let achicar = 2;
+                
+                for (let i = 0; i < 400; i++) {
+                    ctx.beginPath();
+                    ctx.arc(X + rad * Math.cos(angulo), Y + rad * Math.sin(angulo), rad, 0, 2 * Math.PI);
+                    
+                    if (i % 2 == 0) {
+                        ctx.fillStyle = "white";
+                    } else {
+                        ctx.fillStyle = "black";
+                    }
+                    
+                    ctx.fill();
+                    ctx.stroke();
+                    
+                    if(rad>0)
+                        rad -= achicar;
+                    angulo += 0.1;
+                }
+            }
+
+            function gunter() {
+                //Cabeza blanca
+                let rgb = "rgb(21, 38, 53)";
+                ctx.beginPath();
+                ctx.lineWidth = 5;
+                ctx.fillStyle = rgb;
+                ctx.arc(400, 300, 100, 0, 2 * Math.PI);
+                ctx.stroke();
+                ctx.fill();
+                //Lateral izquierdo blanco
+                ctx.beginPath();
+                ctx.fillStyle = "white";
+                ctx.ellipse(313, 430, 160, 25, 1.56, 0, 90);
+                ctx.stroke();
+                ctx.fill();
+                //Parte Baja Mitad Linea blanca
+                ctx.beginPath();
+                ctx.fillStyle = "white";
+                ctx.ellipse(400, 579, 93, 30, 0, 0, 3)
+                ctx.stroke();
+                ctx.fill();
+                //Cuerpo blanco
+                ctx.beginPath();
+                ctx.fillStyle = "white";
+                ctx.fillRect(308, 260, 184, 324);
+                //Lateral derecho oscuro
+                ctx.beginPath();
+                ctx.fillStyle = rgb;
+                ctx.ellipse(487, 422, 164, 25, 1.56, 3.2, 0)
+                ctx.stroke();
+                ctx.fill();
+                //Sombra parte baja oscura
+                ctx.beginPath();
+                ctx.fillStyle = rgb;
+                ctx.ellipse(448, 576, 50, 27, 3, 10, 0)
+                ctx.stroke();
+                ctx.fill();
+                //Continuacion de sombra parte derecha
+                ctx.beginPath();
+                ctx.fillStyle = rgb;
+                ctx.ellipse(420, 500, 100, 40, 4.7, 10, 0)
+                ctx.stroke();
+                ctx.fill();
+                //Relleno oscuro de cuerpo
+                ctx.beginPath();
+                ctx.fillStyle = rgb;
+                ctx.fillRect(400, 410, 90, 180);
+                //Continuacion de LINEA de sombra parte derecha
+                ctx.beginPath();
+                ctx.fillStyle = rgb;
+                ctx.lineWidth = 2.5;
+                ctx.ellipse(380, 306, 100, 30, 1.3, 5, 0)
+                ctx.stroke();
+                //Relleno oscuro de cuerpo #2
+                ctx.beginPath();
+                ctx.fillStyle = rgb;
+                ctx.fillRect(420, 300, 80, 180);   
+                //Relleno oscuro de cuerpo #3
+                ctx.beginPath();
+                ctx.lineWidth = 2.5;
+                ctx.ellipse(420, 324, 100, 30, 1.80, 5, 0)
+                ctx.fillStyle = rgb;
+                ctx.fill();     
+                //Relleno oscuro de cuerpo #4
+                ctx.beginPath();
+                ctx.lineWidth = 2.5;
+                ctx.ellipse(420, 330, 100, 30, 1.80, 5, 0)
+                ctx.fillStyle = rgb;
+                ctx.fill();  
+                //Relleno oscuro de cuerpo #5
+                ctx.beginPath();
+                ctx.lineWidth = 2.5;
+                ctx.ellipse(452, 310, 100, 30, 2, 5, 0)
+                ctx.fillStyle = rgb;
+                ctx.fill();    
+                //Relleno oscuro de cuerpo #5
+                ctx.beginPath();
+                ctx.lineWidth = 2.5;
+                ctx.ellipse(455, 304, 100, 30, 2, 5, 0)
+                ctx.fillStyle = rgb;
+                ctx.fill();        
+                //Relleno oscuro de cuerpo #5
+                ctx.beginPath();
+                ctx.lineWidth = 2.5;
+                ctx.ellipse(486, 453, 100, 30, 4, 5, 0)
+                ctx.fillStyle = rgb;
+                ctx.fill();     
+                //Continuacion de LINEA de sombra parte derecha #2
+                ctx.beginPath();
+                ctx.fillStyle = rgb;
+                ctx.lineWidth = 2.5;
+                ctx.ellipse(330, 300, 100, 70, 7.1, 5, 0)
+                ctx.stroke();                                             
+                //Parche para linea
+                ctx.beginPath();
+                ctx.lineWidth = 5;
+                ctx.fillStyle = "white";
+                ctx.arc(396, 354, 20, 0, 2 * Math.PI);
+                ctx.fill();
+                //Parche para linea #2
+                ctx.beginPath();
+                ctx.lineWidth = 5;
+                ctx.fillStyle = "white";
+                ctx.arc(396, 340, 20, 0, 2 * Math.PI);
+                ctx.fill();
+                //Continuacion de LINEA de sombra parte derecha #3
+                ctx.beginPath();
+                ctx.fillStyle = rgb;
+                ctx.lineWidth = 2.5;
+                ctx.ellipse(328, 346, 100, 76, 5.6, 5, 0)
+                ctx.stroke();  
+                //Relleno de cuerpo
+                ctx.beginPath();
+                ctx.lineWidth = 5;
+                ctx.fillStyle = rgb;
+                ctx.arc(440, 260, 40, 0, 2 * Math.PI);
+                ctx.fill();
+                //Relleno de cuerpo
+                ctx.beginPath();
+                ctx.lineWidth = 5;
+                ctx.fillStyle = rgb;
+                ctx.arc(457, 280, 40, 0, 2 * Math.PI);
+                ctx.fill();     
+                //Relleno de cuerpo
+                ctx.beginPath();
+                ctx.lineWidth = 5;
+                ctx.fillStyle = rgb;
+                ctx.arc(451.5, 266, 40, 0, 2 * Math.PI);
+                ctx.fill();       
+                //Relleno de cuerpo
+                ctx.beginPath();
+                ctx.lineWidth = 5;
+                ctx.fillStyle = rgb;
+                ctx.arc(457, 335, 40, 0, 2 * Math.PI);
+                ctx.fill();     
+                //Relleno de cuerpo
+                ctx.beginPath();
+                ctx.lineWidth = 5;
+                ctx.fillStyle = rgb;
+                ctx.arc(453, 312, 40, 0, 2 * Math.PI);
+                ctx.fill();     
+                //Relleno de cuerpo
+                ctx.beginPath();
+                ctx.lineWidth = 5;
+                ctx.fillStyle = rgb;
+                ctx.arc(445, 282, 40, 0, 2 * Math.PI);
+                ctx.fill();  
+                //Relleno de cuerpo
+                ctx.beginPath();
+                ctx.lineWidth = 5;
+                ctx.fillStyle = rgb;
+                ctx.arc(420, 242, 39, 0, 2 * Math.PI);
+                ctx.fill();    
+                //Relleno de cuerpo
+                ctx.beginPath();
+                ctx.lineWidth = 5;
+                ctx.fillStyle = rgb;
+                ctx.arc(436, 250, 39, 0, 2 * Math.PI);
+                ctx.fill();   
+                //Relleno de cuerpo
+                ctx.beginPath();
+                ctx.lineWidth = 5;
+                ctx.fillStyle = rgb;
+                ctx.arc(440, 252, 39, 0, 2 * Math.PI);
+                ctx.fill();   
+                //Relleno de cuerpo
+                ctx.beginPath();
+                ctx.lineWidth = 5;
+                ctx.fillStyle = rgb;
+                ctx.arc(430, 246, 39, 0, 2 * Math.PI);
+                ctx.fill();  
+                //Relleno de cuerpo
+                ctx.beginPath();
+                ctx.lineWidth = 5;
+                ctx.fillStyle = rgb;
+                ctx.arc(370, 230, 25, 0, 2 * Math.PI);
+                ctx.fill();  
+                //Relleno de cuerpo
+                ctx.beginPath();
+                ctx.lineWidth = 5;
+                ctx.fillStyle = rgb;
+                ctx.arc(390, 225, 25, 0, 2 * Math.PI);
+                ctx.fill();  
+                //Relleno de cuerpo
+                ctx.beginPath();
+                ctx.lineWidth = 5;
+                ctx.fillStyle = rgb;
+                ctx.arc(350, 237, 20, 0, 2 * Math.PI);
+                ctx.fill(); 
+                //Relleno de cuerpo
+                ctx.beginPath();
+                ctx.lineWidth = 5;
+                ctx.fillStyle = rgb;
+                ctx.arc(320, 255, 10, 0, 2 * Math.PI);
+                ctx.fill(); 
+                //Relleno de cuerpo
+                ctx.beginPath();
+                ctx.lineWidth = 5;
+                ctx.fillStyle = rgb;
+                ctx.arc(330, 245, 12, 0, 2 * Math.PI);
+                ctx.fill(); 
+                //Relleno de cuerpo
+                ctx.beginPath();
+                ctx.lineWidth = 5;
+                ctx.fillStyle = rgb;
+                ctx.arc(340, 248, 12, 0, 2 * Math.PI);
+                ctx.fill(); 
+                //Relleno de cuerpo
+                ctx.beginPath();
+                ctx.lineWidth = 5;
+                ctx.fillStyle = rgb;
+                ctx.arc(340, 248, 12, 0, 2 * Math.PI);
+                ctx.fill();
+                //Relleno de cuerpo
+                ctx.beginPath();
+                ctx.lineWidth = 5;
+                ctx.fillStyle = rgb;
+                ctx.arc(311, 263, 6, 0, 2 * Math.PI);
+                ctx.fill(); 
+                //Relleno de cuerpo
+                ctx.beginPath();
+                ctx.lineWidth = 5;
+                ctx.fillStyle = rgb;
+                ctx.arc(330, 257, 6, 0, 2 * Math.PI);
+                ctx.fill(); 
+                //Relleno de cuerpo
+                ctx.beginPath();
+                ctx.lineWidth = 5;
+                ctx.fillStyle = rgb;
+                ctx.arc(377, 253, 10, 0, 2 * Math.PI);
+                ctx.fill(); 
+                //Relleno de cuerpo
+                ctx.beginPath();
+                ctx.lineWidth = 5;
+                ctx.fillStyle = rgb;
+                ctx.arc(385, 260, 6, 0, 2 * Math.PI);
+                ctx.fill(); 
+                //Relleno de cuerpo
+                ctx.beginPath();
+                ctx.lineWidth = 5;
+                ctx.fillStyle = rgb;
+                ctx.arc(389, 263, 6, 0, 2 * Math.PI);
+                ctx.fill(); 
+                //Relleno de cuerpo
+                ctx.beginPath();
+                ctx.lineWidth = 5;
+                ctx.fillStyle = rgb;
+                ctx.arc(405, 275, 6, 0, 2 * Math.PI);
+                ctx.fill(); 
+                // AL FIN SE ACAO EL RELLENO DEL CUERPO
+                //Brazo izquierdo PARTE SUPERIOR
+                ctx.beginPath();
+                ctx.fillStyle = rgb;
+                ctx.lineWidth = 2.5;
+                ctx.ellipse(360, 480, 100, 120, 3.9, 5, 0)
+                ctx.stroke(); 
+                //Brazo izquierdo PARTE INFERIOR
+                ctx.beginPath();
+                ctx.fillStyle = rgb;
+                ctx.lineWidth = 2.5;
+                ctx.ellipse(304, 454, 100, 30, 8.3, 11, 0)
+                ctx.stroke(); 
+                //Cuerpo blanco
+                ctx.beginPath();
+                ctx.fillStyle = "white";
+                ctx.fillRect(294.2, 330, 70, 200);
+                //Relleno de brazo izquierdo
+                ctx.beginPath();
+                ctx.lineWidth = 5;
+                ctx.fillStyle = rgb;
+                ctx.arc(267, 535, 10, 0, 2 * Math.PI);
+                ctx.fill(); 
+                //Relleno de brazo izquierdo
+                ctx.beginPath();
+                ctx.lineWidth = 5;
+                ctx.fillStyle = rgb;
+                ctx.arc(264, 526, 10, 0, 2 * Math.PI);
+                ctx.fill(); 
+                //Relleno de brazo izquierdo
+                ctx.beginPath();
+                ctx.lineWidth = 5;
+                ctx.fillStyle = rgb;
+                ctx.arc(274, 531, 10, 0, 2 * Math.PI);
+                ctx.fill(); 
+                //Relleno de brazo izquierdo
+                ctx.beginPath();
+                ctx.lineWidth = 5;
+                ctx.fillStyle = rgb;
+                ctx.arc(272, 520, 17, 0, 2 * Math.PI);
+                ctx.fill();
+                //Relleno de brazo izquierdo
+                ctx.beginPath();
+                ctx.lineWidth = 5;
+                ctx.fillStyle = rgb;
+                ctx.arc(272, 520, 17, 0, 2 * Math.PI);
+                ctx.fill();
+                //Relleno de brazo izquierdo
+                ctx.beginPath();
+                ctx.lineWidth = 5;
+                ctx.fillStyle = rgb;
+                ctx.arc(270, 480, 17, 0, 2 * Math.PI);
+                ctx.fill();
+                //Relleno de brazo izquierdo
+                ctx.beginPath();
+                ctx.lineWidth = 5;
+                ctx.fillStyle = rgb;
+                ctx.arc(270, 500, 19, 0, 2 * Math.PI);
+                ctx.fill();
+                //Relleno de brazo izquierdo
+                ctx.beginPath();
+                ctx.lineWidth = 5;
+                ctx.fillStyle = rgb;
+                ctx.arc(273, 460, 14, 0, 2 * Math.PI);
+                ctx.fill();
+                //Relleno de brazo izquierdo
+                ctx.beginPath();
+                ctx.lineWidth = 5;
+                ctx.fillStyle = rgb;
+                ctx.arc(268, 469, 14, 0, 2 * Math.PI);
+                ctx.fill();
+                //Relleno de brazo izquierdo
+                ctx.beginPath();
+                ctx.lineWidth = 5;
+                ctx.fillStyle = rgb;
+                ctx.arc(264, 490, 14, 0, 2 * Math.PI);
+                ctx.fill();
+                //Relleno de brazo izquierdo
+                ctx.beginPath();
+                ctx.lineWidth = 5;
+                ctx.fillStyle = rgb;
+                ctx.arc(264, 509, 14, 0, 2 * Math.PI);
+                ctx.fill();
+                //Relleno de brazo izquierdo
+                ctx.beginPath();
+                ctx.lineWidth = 5;
+                ctx.fillStyle = rgb;
+                ctx.arc(265, 515, 14, 0, 2 * Math.PI);
+                ctx.fill();
+                //Relleno de brazo izquierdo
+                ctx.beginPath();
+                ctx.lineWidth = 5;
+                ctx.fillStyle = rgb;
+                ctx.arc(275, 450, 13, 0, 2 * Math.PI);
+                ctx.fill();
+                //Relleno de brazo izquierdo
+                ctx.beginPath();
+                ctx.lineWidth = 5;
+                ctx.fillStyle = rgb;
+                ctx.arc(280, 432, 8, 0, 2 * Math.PI);
+                ctx.fill();
+                //Relleno de brazo izquierdo
+                ctx.beginPath();
+                ctx.lineWidth = 5;
+                ctx.fillStyle = rgb;
+                ctx.arc(276, 438, 8, 0, 2 * Math.PI);
+                ctx.fill();
+                //Relleno de brazo izquierdo
+                ctx.beginPath();
+                ctx.lineWidth = 5;
+                ctx.fillStyle = rgb;
+                ctx.arc(280, 438, 8, 0, 2 * Math.PI);
+                ctx.fill();
+                //Relleno de brazo izquierdo
+                ctx.beginPath();
+                ctx.lineWidth = 5;
+                ctx.fillStyle = rgb;
+                ctx.arc(282, 423, 4, 0, 2 * Math.PI);
+                ctx.fill();
+                //Relleno de brazo izquierdo
+                ctx.beginPath();
+                ctx.lineWidth = 5;
+                ctx.fillStyle = rgb;
+                ctx.arc(284, 420, 4, 0, 2 * Math.PI);
+                ctx.fill();
+                //Relleno de brazo izquierdo
+                ctx.beginPath();
+                ctx.lineWidth = 5;
+                ctx.fillStyle = rgb;
+                ctx.arc(284, 470, 4, 0, 2 * Math.PI);
+                ctx.fill();
+                //Relleno de brazo izquierdo
+                ctx.beginPath();
+                ctx.lineWidth = 5;
+                ctx.fillStyle = rgb;
+                ctx.arc(285, 489, 4, 0, 2 * Math.PI);
+                ctx.fill();
+                //Relleno de brazo izquierdo
+                ctx.beginPath();
+                ctx.lineWidth = 5;
+                ctx.fillStyle = rgb;
+                ctx.arc(286, 487, 4, 0, 2 * Math.PI);
+                ctx.fill();
+                //Relleno de brazo izquierdo
+                ctx.beginPath();
+                ctx.lineWidth = 5;
+                ctx.fillStyle = rgb;
+                ctx.arc(286, 485, 4, 0, 2 * Math.PI);
+                ctx.fill();
+                //Relleno de brazo izquierdo
+                ctx.beginPath();
+                ctx.lineWidth = 5;
+                ctx.fillStyle = rgb;
+                ctx.arc(285, 477, 4, 0, 2 * Math.PI);
+                ctx.fill();
+                //Relleno de brazo izquierdo
+                ctx.beginPath();
+                ctx.lineWidth = 5;
+                ctx.fillStyle = rgb;
+                ctx.arc(285, 468, 4, 0, 2 * Math.PI);
+                ctx.fill();
+                //Relleno de brazo izquierdo
+                ctx.beginPath();
+                ctx.lineWidth = 5;
+                ctx.fillStyle = rgb;
+                ctx.arc(285, 490, 4, 0, 2 * Math.PI);
+                ctx.fill();
+                //Relleno de brazo izquierdo
+                ctx.beginPath();
+                ctx.lineWidth = 5;
+                ctx.fillStyle = rgb;
+                ctx.arc(286, 506, 4, 0, 2 * Math.PI);
+                ctx.fill();
+                //Relleno de brazo izquierdo
+                ctx.beginPath();
+                ctx.lineWidth = 5;
+                ctx.fillStyle = rgb;
+                ctx.arc(286, 512, 4, 0, 2 * Math.PI);
+                ctx.fill();
+                //Relleno de brazo izquierdo
+                ctx.beginPath();
+                ctx.lineWidth = 5;
+                ctx.fillStyle = rgb;
+                ctx.arc(286, 516, 4, 0, 2 * Math.PI);
+                ctx.fill();
+                //Relleno de brazo izquierdo
+                ctx.beginPath();
+                ctx.lineWidth = 5;
+                ctx.fillStyle = rgb;
+                ctx.arc(285, 522, 8, 0, 2 * Math.PI);
+                ctx.fill();
+                //Relleno de brazo izquierdo
+                ctx.beginPath();
+                ctx.lineWidth = 5;
+                ctx.fillStyle = rgb;
+                ctx.arc(280, 528, 8, 0, 2 * Math.PI);
+                ctx.fill();
+
+
+
+                                // AL FIN SE ACAO EL RELLENO DEL CUERPO
+                //Brazo izquierdo PARTE SUPERIOR
+                ctx.beginPath();
+                ctx.fillStyle = rgb;
+                ctx.lineWidth = 2.5;
+                ctx.ellipse(472, 480, 100, 120, 3.9, 5, 0)
+                ctx.stroke(); 
+                //Brazo izquierdo PARTE INFERIOR
+                ctx.beginPath();
+                ctx.fillStyle = rgb;
+                ctx.lineWidth = 2.5;
+                ctx.ellipse(415, 454, 100, 30, 8.3, 11, 0)
+                ctx.stroke(); 
+                //Relleno de brazo izquierdo
+                ctx.beginPath();
+                ctx.lineWidth = 5;
+                ctx.fillStyle = rgb;
+                ctx.arc(379, 535, 10, 0, 2 * Math.PI);
+                ctx.fill(); 
+                //Relleno de brazo izquierdo
+                ctx.beginPath();
+                ctx.lineWidth = 5;
+                ctx.fillStyle = rgb;
+                ctx.arc(376, 526, 10, 0, 2 * Math.PI);
+                ctx.fill(); 
+                //Relleno de brazo izquierdo
+                ctx.beginPath();
+                ctx.lineWidth = 5;
+                ctx.fillStyle = rgb;
+                ctx.arc(386, 531, 10, 0, 2 * Math.PI);
+                ctx.fill(); 
+                //Relleno de brazo izquierdo
+                ctx.beginPath();
+                ctx.lineWidth = 5;
+                ctx.fillStyle = rgb;
+                ctx.arc(384, 520, 17, 0, 2 * Math.PI);
+                ctx.fill();
+                //Relleno de brazo izquierdo
+                ctx.beginPath();
+                ctx.lineWidth = 5;
+                ctx.fillStyle = rgb;
+                ctx.arc(384, 520, 17, 0, 2 * Math.PI);
+                ctx.fill();
+                //Relleno de brazo izquierdo
+                ctx.beginPath();
+                ctx.lineWidth = 5;
+                ctx.fillStyle = rgb;
+                ctx.arc(382, 480, 17, 0, 2 * Math.PI);
+                ctx.fill();
+                //Relleno de brazo izquierdo
+                ctx.beginPath();
+                ctx.lineWidth = 5;
+                ctx.fillStyle = rgb;
+                ctx.arc(382, 500, 19, 0, 2 * Math.PI);
+                ctx.fill();
+                //Relleno de brazo izquierdo
+                ctx.beginPath();
+                ctx.lineWidth = 5;
+                ctx.fillStyle = rgb;
+                ctx.arc(384.5, 460, 14, 0, 2 * Math.PI);
+                ctx.fill();
+                //Relleno de brazo izquierdo
+                ctx.beginPath();
+                ctx.lineWidth = 5;
+                ctx.fillStyle = rgb;
+                ctx.arc(380, 469, 14, 0, 2 * Math.PI);
+                ctx.fill();
+                //Relleno de brazo izquierdo
+                ctx.beginPath();
+                ctx.lineWidth = 5;
+                ctx.fillStyle = rgb;
+                ctx.arc(376, 490, 14, 0, 2 * Math.PI);
+                ctx.fill();
+                //Relleno de brazo izquierdo
+                ctx.beginPath();
+                ctx.lineWidth = 5;
+                ctx.fillStyle = rgb;
+                ctx.arc(376, 509, 14, 0, 2 * Math.PI);
+                ctx.fill();
+                //Relleno de brazo izquierdo
+                ctx.beginPath();
+                ctx.lineWidth = 5;
+                ctx.fillStyle = rgb;
+                ctx.arc(377, 515, 14, 0, 2 * Math.PI);
+                ctx.fill();
+                //Relleno de brazo izquierdo
+                ctx.beginPath();
+                ctx.lineWidth = 5;
+                ctx.fillStyle = rgb;
+                ctx.arc(387, 450, 13, 0, 2 * Math.PI);
+                ctx.fill();
+                //Relleno de brazo izquierdo
+                ctx.beginPath();
+                ctx.lineWidth = 5;
+                ctx.fillStyle = rgb;
+                ctx.arc(392, 431, 8, 0, 2 * Math.PI);
+                ctx.fill();
+                //Relleno de brazo izquierdo
+                ctx.beginPath();
+                ctx.lineWidth = 5;
+                ctx.fillStyle = rgb;
+                ctx.arc(388, 438, 8, 0, 2 * Math.PI);
+                ctx.fill();
+
+                //SE ACABARON LOS BRAZOS
+                //Ojo izquierdo
+                ctx.beginPath();
+                ctx.lineWidth = 5;
+                ctx.fillStyle = "black";
+                ctx.arc(300, 321, 18, 0, 2 * Math.PI);
+                ctx.fill();
+                ctx.stroke();
+                //Ojo izquierdo brillo
+                ctx.beginPath();
+                ctx.lineWidth = 5;
+                ctx.fillStyle = "white";
+                ctx.arc(293, 317, 10, 0, 2 * Math.PI);
+                ctx.fill();
+
+                let rgb2 = "rgb(240, 197, 26)";
+                //Pico
+                var vertex1 = { x: 260, y: 350 };
+                var vertex2 = { x: 330, y: 330 };
+                var vertex3 = { x: 330, y: 355 };
+
+                // Draw the triangle
+                ctx.beginPath();
+                ctx.moveTo(vertex1.x, vertex1.y);
+                ctx.lineTo(vertex2.x, vertex2.y);
+                ctx.lineTo(vertex3.x, vertex3.y);
+                ctx.fillStyle = rgb2;
+                ctx.fill();
+                ctx.closePath(); // Connects the last point back to the first
+                ctx.stroke();   // Draw the outline
+
+                //SE ACABARON LOS BRAZOS
+                //Ojo izquierdo
+                ctx.beginPath();
+                ctx.lineWidth = 5;
+                ctx.fillStyle = "black";
+                ctx.arc(365, 321, 18, 0, 2 * Math.PI);
+                ctx.fill();
+                ctx.stroke();
+                //Ojo izquierdo brillo
+                ctx.beginPath();
+                ctx.lineWidth = 5;
+                ctx.fillStyle = "white";
+                ctx.arc(358, 317, 10, 0, 2 * Math.PI);
+                ctx.fill();
+            }
+            espiralInversa();
+            gunter();
+
+        </script>
+    
+    </body>    
+</html>
