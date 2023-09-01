@@ -12,7 +12,6 @@
 	//Y un objeto muro?
 		const canvas = document.getElementById("myCanvas");
 		const ctx = canvas.getContext("2d");
-		let y = 250, x=250, w=100, w2=800;
 		let dir = 0;
         let bandera = true;
 
@@ -58,18 +57,40 @@
 		}
 
 		class Player {
-			constructor(x,y,width, height){
-				this.width = width;
-				this.height = height;
+			constructor(_x,_y,_width){
+				this.width = _width;
+				this.x = _x;
+				this.y = _y;
 			}
-		}
+			set setX(x){
+				this.x = x;
+			}
 
-		let wall1 = new Wall(800,100,100,100);
-		/*
-        for (let index = 0; index < 2; index++) {
-            cuadrados.push([(Math.floor(Math.random() * 1470)),(Math.floor(Math.random() * 800)),w,w2]); 
-        }
-		*/
+			get getX() {
+				return this.x;
+			}
+
+			set setY(y){
+				this.y = y;
+			}
+
+			get getY() {
+				return this.y;
+			}
+
+			set setWidth(width){
+				this.width = width;
+			}
+
+			get getWidth() {
+				return this.width;
+			}
+			
+
+		}
+		
+		let player = new Player(600,350,100);
+		let wall1 = [new Wall(340,200,800,50),new Wall(340,600,800,50)];
 
         //Aca pintamos los elementos
 		function repaint(){
@@ -78,43 +99,28 @@
 			ctx.rect(0, 0, 1470, 800);
 			ctx.fill();
 
-			
-            //Obstaculos
-			/*
-            for (let index = 0; index < cuadrados.length; index++) {
-                ctx.beginPath();
-			    ctx.fillStyle = "black";
-                ctx.rect(cuadrados[index][0], cuadrados[index][1], cuadrados[index][2], cuadrados[index][2]);
-                ctx.fill();
-            }
-			*/
+			for(let findex = 0; findex < wall1.length; findex++){
 			ctx.beginPath();
 			ctx.fillStyle = "black";
-			ctx.rect(wall1.xpos, wall1.ypos,wall1.width, wall1.height);
-
+			ctx.rect(wall1[findex].xPos, wall1[findex].yPos, wall1[findex].getWidth, wall1[findex].getHeight);
+			ctx.stroke();
+			ctx.fill();
+			}
 			draw();
 		}
 
-        //
 		function draw(){
 			ctx.beginPath();
 			ctx.fillStyle = "black";
-			ctx.rect(x, y, w, w);
+			ctx.rect(player.getX, player.getY, player.getWidth, player.getWidth);
 			ctx.stroke();
 		}
 
 		document.addEventListener("keydown", function (e){
-			console.log(e.keyCode);
 			switch(e.keyCode){
 				case 87:
-					dir = e.keyCode;
-					break;
 				case 83:
-					dir = e.keyCode;
-					break;
 				case 68:
-					dir = e.keyCode;
-					break;
 				case 65:
 					dir = e.keyCode;
 					break;
@@ -123,61 +129,45 @@
 
         let flag = false;
 		function update(){
+			//Pintar obstaculos
+			for(let findex = 0; findex < wall1.length; findex++){
+                if(player.getX < wall1[findex].xPos + wall1[findex].getWidth &&  player.getX + player.getWidth > wall1[findex].xPos && 
+				player.getY < wall1[findex].yPos + wall1[findex].getHeight &&  player.getY + player.getWidth > wall1[findex].yPos){	
+					
+					if(dir == 87)
+						dir = 83;
+					else if(dir == 83)
+						dir = 87
+					else if(dir == 68)
+						dir = 65;
+					else
+						dir = 68
 
-            //detector de colisiones
-            /*for(let findex = 0; findex < cuadrados.length; findex++){
-                if(x < cuadrados[findex][0] + cuadrados[findex][2] &&  x + w > cuadrados[findex][0] && 
-                   y < cuadrados[findex][1] + cuadrados[findex][2] &&  y + w > cuadrados[findex][1]){
-                         cuadrados[findex][0] = (Math.floor(Math.random() * 1470));
-                         cuadrados[findex][1] = (Math.floor(Math.random() * 800));
-                         flag = true;
-                         repaint();
+					console.log("Collision");
+					repaint();
                 }   
             }
-			*/
-
-			for(let findex = 0; findex < 1; findex++){
-                if(x < wall1.xpos + wall1.width &&  x + w > wall1.xpos && 
-                   y < wall1.ypos + wall1.height &&  y + w > wall1.ypos){
-                         repaint();
-                }   
-            }
-			
-
+			//Controladores de movimiento
+			//Controlador de rebote en pared
 			switch(dir){
 				case 87:
-                    if(flag){
-                        dir = 83;
-                        flag = false;
-                    }
-					y-= 10;
-					if(y<0) {y=800} else if(y>800){y=0}
+					player.setY = (player.getY - 10);
+					if(player.getY<0) {dir=83}
 					break;
 				case 83:
-                    if(flag){
-                        dir = 87;
-                        flag = false;
-                    }
-					y+= 10;
-					if(y<0) {y=800} else if(y>800){y=0}
+					player.setY = (player.getY + 10);
+					if(player.getY>(canvas.height - player.getWidth)){dir=87}
 					break;
 				case 68:
-                    if(flag){
-                        dir = 65;
-                        flag = false;
-                    }
-					x+= 10;
-					if(x<0) {x=1470} else if(x>1470){x=0}
+					player.setX = (player.getX + 10);
+					if(player.getX>canvas.width - player.getWidth){dir=65}
 					break;
 				case 65:
-                    if(flag){
-                        dir = 68;
-                        flag = false;
-                    }
-					x-= 10;
-					if(x<0) {x=1470} else if(x>1470){x=0}
+					player.setX = (player.getX - 10);
+					if(player.getX<0) {dir=68}
 					break;
 			}
+			console.log(dir);
 			repaint();
 			window.requestAnimationFrame(update);
 		}
