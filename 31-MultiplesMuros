@@ -90,7 +90,7 @@
 		}
 		
 		let player = new Player(600,350,100);
-		let wall1 = [new Wall(340,200,800,50)];
+		let wall1 = [new Wall(340,200,800,50),new Wall(340,600,800,50),new Wall(100,300,50,800)];
 
         //Aca pintamos los elementos
 		function repaint(){
@@ -156,7 +156,7 @@
 					if(player.getX < wall1[findex].xPos + wall1[findex].getWidth &&  player.getX + player.getWidth > wall1[findex].xPos && 
 					player.getY < wall1[findex].yPos + wall1[findex].getHeight &&  player.getY + player.getWidth > wall1[findex].yPos){	
 						
-
+						
 						if(dir == 87)
 							player.setY = (player.getY + 10);
 						if(dir == 83)
