@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+    <body>
+        <canvas id="myCanvas" width="1470" height="800" style="border: 2px solid black"></canvas>
+        <script>
+            const canvas = document.getElementById("myCanvas");
+            const ctx = canvas.getContext("2d");
+            let rgb;
+
+            function dibujarCuadro(x, y, width, color, ln){
+                ctx.lineWidth = ln;
+                ctx.beginPath();
+                ctx.fillStyle = color;
+                ctx.rect(x,y,width,width);
+                ctx.stroke();
+                ctx.fill();
+            }
+            rgb = "rgb(179, 238, 254)";
+            //Fondo azul
+            ctx.beginPath();
+            ctx.fillStyle = rgb;
+            ctx.rect(0, 0, 1470, 800);
+            ctx.fill();
+            ctx.stroke();
+
+            //2 cuadros voladores
+            let x = 340;
+            let y = 120;
+            rgb = "rgb(254, 145, 89)";
+            dibujarCuadro(x,y, 80, rgb, 12);
+            dibujarCuadro(x+80,y, 80, rgb, 12);
+
+            //Cuadro volador solitario
+            x = 100;
+            y = 300;
+            dibujarCuadro(x,y, 80, rgb);
+
+            //Piso primera linea
+            x = 0;
+            y = 600;
+            ctx.lineWidth = 5;
+            rgb = "rgb(253, 201, 188)";
+            ctx.beginPath();
+            ctx.fillStyle = rgb;
+            ctx.rect(-10, 650, 1490, 30);
+            ctx.fill();
+            ctx.stroke();
+
+
+    </script>
+</body>
+</html>
