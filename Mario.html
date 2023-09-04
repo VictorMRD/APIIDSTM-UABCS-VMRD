@@ -20,6 +20,14 @@
                 ctx.stroke();
                 ctx.fill();
             }
+            function dibujarRect(x, y, width, height, color, ln){
+                ctx.lineWidth = ln;
+                ctx.beginPath();
+                ctx.fillStyle = color;
+                ctx.rect(x,y,width,height);
+                ctx.stroke();
+                ctx.fill();
+            }
             rgb = "rgb(179, 238, 254)";
             //Fondo azul
             ctx.beginPath();
@@ -35,9 +43,14 @@
             dibujarCuadro(x,y, 80, rgb, 12);
             dibujarCuadro(x+80,y, 80, rgb, 12);
 
-            //Cuadro volador solitario
+            //Cuadro volador solitario izquierda
             x = 100;
             y = 300;
+            dibujarCuadro(x,y, 80, rgb);
+
+            //Cuadro volador solitario derecha
+            x = 1200;
+            y = 200;
             dibujarCuadro(x,y, 80, rgb);
 
             //Piso primera linea
@@ -47,10 +60,584 @@
             rgb = "rgb(253, 201, 188)";
             ctx.beginPath();
             ctx.fillStyle = rgb;
-            ctx.rect(-10, 650, 1490, 30);
+            ctx.rect(-10, 680, 1490, 30);
+            ctx.fill();
+            ctx.stroke();
+            
+            //Piso segunda linea
+            x = 0;
+            y = 600;
+            ctx.lineWidth = 5;
+            rgb = "rgb(226, 152, 107)";
+            ctx.beginPath();
+            ctx.fillStyle = rgb;
+            ctx.rect(-10, 710, 1490, 130);
             ctx.fill();
             ctx.stroke();
 
+            //Patron de lineas
+            ctx.lineWidth = 5;
+            rgb = "rgb(57, 9, 5)";
+            let space = 80;
+            for (let index = 0; index < 20; index++) {
+                ctx.beginPath();
+                ctx.fillStyle = rgb;
+                ctx.moveTo(10 + ((index) * space), 710);
+                ctx.lineTo(10 + ((index ) * space),720);
+                ctx.lineTo(15 + ((index ) * space),720);
+                ctx.lineTo(15 + ((index) * space),732);
+                ctx.lineTo(25 + ((index) * space),732);
+                ctx.lineTo(25 + ((index) * space),740);
+                ctx.lineTo(32 + ((index) * space),740);
+                ctx.lineTo(32 + ((index) * space),755);
+                ctx.lineTo(45 + ((index) * space),755);
+                ctx.lineTo(45 + ((index) * space),762);
+                ctx.lineTo(60 + ((index) * space),763);
+                ctx.lineTo(60 + ((index) * space),772);
+                ctx.lineTo(70 + ((index) * space),772);
+                ctx.lineTo(70 + ((index) * space),787);
+                ctx.lineTo(82 + ((index) * space),787);
+                ctx.lineTo(82 + ((index) * space),800);
+                ctx.lineTo(100 + ((index) * space),800);
+                ctx.lineTo(100 + ((index) * space),798);
+                ctx.lineTo(86 + ((index) * space),798);
+                ctx.lineTo(86 + ((index) * space),774);
+                ctx.lineTo(70 + ((index) * space),774);
+                ctx.lineTo(70 + ((index) * space),765);
+                ctx.lineTo(60 + ((index) * space),765);
+                ctx.lineTo(60 + ((index) * space),755);
+                ctx.lineTo(40 + ((index) * space),755);
+                ctx.lineTo(40 + ((index) * space),740);
+                ctx.lineTo(30 + ((index) * space),740);
+                ctx.lineTo(30 + ((index) * space),730);
+                ctx.lineTo(25 + ((index) * space),730);
+                ctx.lineTo(25 + ((index) * space),720);
+                ctx.lineTo(25 + ((index) * space),720);
+                ctx.lineTo(25 + ((index) * space),710);
+                ctx.stroke();
+                ctx.fill();
+                ctx.closePath();                
+            }
+
+            //Brillo
+            ctx.lineWidth = 5;
+            rgb = "rgb(254, 220, 210, 0.45)";
+            ctx.beginPath();
+            ctx.fillStyle = rgb;
+            ctx.rect(-10, 708, 1490, 26);
+            ctx.fill();
+
+            
+            //Sombra caja grande
+            dibujarRect(640,300,250,377,"black",10);
+            //Cajas Grande 2 detras de la primera azul
+            rgb = "rgb(132, 192, 255)";
+            dibujarRect(600,276,250,400,rgb,10);
+            //Sombra caja pequeña
+            dibujarRect(510,444,250,230,"black",10);
+            //Cajas Grande 1 crema
+            rgb = "rgb(255, 195, 184)";
+            dibujarCuadro(480,426,250,rgb,10);
+            //Cajas Grande 3 verde
+            rgb = "rgb(82, 216, 108)";
+            dibujarCuadro(1280,426,250,rgb,10);
+
+            function tornilloCajaUno(x,y){
+                ctx.lineWidth = 4;
+                ctx.fillStyle = "lightgray";
+                ctx.beginPath();
+                ctx.moveTo(x, y);
+                ctx.lineTo(x+20, y);
+                ctx.lineTo(x+20, y+5);
+                ctx.lineTo(x+25, y+5);
+                ctx.lineTo(x+25, y+23);
+                ctx.lineTo(x+20, y+23);
+                ctx.lineTo(x+20, y+27);
+                ctx.lineTo(x+0, y+27);
+                ctx.lineTo(x+0, y+23);
+                ctx.lineTo(x-5, y+23);
+                ctx.lineTo(x-5, y+5);
+                ctx.lineTo(x, y+5);
+                ctx.lineTo(x, y);
+                ctx.fill();
+                ctx.stroke();
+                
+                ctx.fillStyle = "lightgray";
+                ctx.lineWidth = 3;
+                ctx.beginPath();
+                ctx.moveTo(x, y+20);
+                ctx.lineTo(x+5, y+20);
+                ctx.lineTo(x+5, y+15);
+                ctx.lineTo(x+14, y+15);
+                ctx.lineTo(x+14, y+6);
+                ctx.lineTo(x+20, y+6);
+                ctx.stroke();
+            }
+
+            //tornillos del primer cuadro de enfrente
+            tornilloCajaUno(500,440);
+            tornilloCajaUno(690,440);
+            tornilloCajaUno(500,635);
+            tornilloCajaUno(690, 635);
+
+            //tornillos del segundo cuadro de atras
+            tornilloCajaUno(620,290);
+            tornilloCajaUno(810,290);
+            tornilloCajaUno(810,635);
+
+            //tornillas del tercer cuadro verde
+            tornilloCajaUno(1300,440);
+            tornilloCajaUno(1300,635);
+            
+            //Arbusto
+            function dibujarArbusto(x, y){
+                //Los tuve que poner separados por un error de logica
+                //O mejor dicho, falta de experiencia utilizando fill() en lineTo
+                //color
+                rgb = "rgb(87,213,113)";   
+                ctx.fillStyle = rgb;
+                ctx.beginPath();
+                ctx.moveTo(x,y);
+                ctx.lineTo(x+20, y);
+                ctx.lineTo(x+20, y+5);
+                ctx.lineTo(x+25, y+5);
+                ctx.lineTo(x+25, y+8);
+                ctx.lineTo(x+20, y+8);
+                ctx.lineTo(x+25, y+8);
+                ctx.lineTo(x+25, y+13);
+                ctx.lineTo(x+29, y+13);
+                ctx.lineTo(x+29, y+18);
+                ctx.lineTo(x+34, y+18);
+                ctx.lineTo(x+34, y+26);
+                ctx.lineTo(x+32, y+26);
+                ctx.lineTo(x+32, y+18);
+                ctx.lineTo(x+34, y+18);
+                ctx.lineTo(x+34, y+28);
+                ctx.lineTo(x+38, y+28);
+                ctx.lineTo(x+38, y+36);
+                ctx.lineTo(x+42, y+36);
+                ctx.lineTo(x+42, y+60);
+                ctx.lineTo(x+37, y+60);
+                ctx.lineTo(x+37, y+65);
+                ctx.lineTo(x-10, y+65);
+                ctx.lineTo(x-10, y+60);
+                ctx.lineTo(x-15, y+60);
+                ctx.lineTo(x-15, y+42);
+                ctx.lineTo(x-12, y+42);
+                ctx.lineTo(x-12, y+32);
+                ctx.lineTo(x-8, y+32);
+                ctx.lineTo(x-8, y+20);
+                ctx.lineTo(x, y+20);
+                ctx.lineTo(x, y+15);
+                ctx.lineTo(x+16, y+15);
+                ctx.lineTo(x+16, y+18);
+                ctx.lineTo(x+22, y+18);
+                ctx.lineTo(x+22, y+18);
+                ctx.lineTo(x+22, y+24);
+                ctx.lineTo(x+27, y+24);
+                ctx.lineTo(x+27, y+32);
+                ctx.lineTo(x+37, y+32);
+                ctx.lineTo(x+27, y+32);
+                ctx.lineTo(x+27, y+38);
+                ctx.lineTo(x+27, y+24);
+                ctx.lineTo(x+22, y+24);
+                ctx.lineTo(x+22, y+18);
+                ctx.lineTo(x+16, y+18);
+                ctx.lineTo(x+16, y+15);
+                ctx.lineTo(x, y+15);
+                ctx.lineTo(x, y+20);
+                ctx.lineTo(x-5, y+20);
+                ctx.lineTo(x-5, y+10);
+                ctx.lineTo(x-2, y+10);
+                ctx.lineTo(x, y+10);
+                ctx.lineTo(x, y);
+                ctx.fill();
+
+                //Lineas
+                ctx.lineWidth = 5;
+                ctx.beginPath();
+                ctx.moveTo(x,y);
+                ctx.lineTo(x+20, y);
+                ctx.lineTo(x+20, y+5);
+                ctx.lineTo(x+25, y+5);
+                ctx.lineTo(x+25, y+8);
+                ctx.lineTo(x+20, y+8);
+                ctx.lineTo(x+25, y+8);
+                ctx.lineTo(x+25, y+13);
+                ctx.lineTo(x+29, y+13);
+                ctx.lineTo(x+29, y+18);
+                ctx.lineTo(x+34, y+18);
+                ctx.lineTo(x+34, y+26);
+                ctx.lineTo(x+32, y+26);
+                ctx.lineTo(x+32, y+18);
+                ctx.lineTo(x+34, y+18);
+                ctx.lineTo(x+34, y+28);
+                ctx.lineTo(x+38, y+28);
+                ctx.lineTo(x+38, y+36);
+                ctx.lineTo(x+42, y+36);
+                ctx.lineTo(x+42, y+60);
+                ctx.lineTo(x+37, y+60);
+                ctx.lineTo(x+37, y+65);
+                ctx.lineTo(x-10, y+65);
+                ctx.lineTo(x-10, y+60);
+                ctx.lineTo(x-15, y+60);
+                ctx.lineTo(x-15, y+42);
+                ctx.lineTo(x-12, y+42);
+                ctx.lineTo(x-12, y+32);
+                ctx.lineTo(x-8, y+32);
+                ctx.lineTo(x-8, y+20);
+                ctx.lineTo(x, y+20);
+                ctx.lineTo(x, y+15);
+                ctx.lineTo(x+16, y+15);
+                ctx.lineTo(x+16, y+18);
+                ctx.lineTo(x+22, y+18);
+                ctx.lineTo(x+22, y+18);
+                ctx.lineTo(x+22, y+24);
+                ctx.lineTo(x+27, y+24);
+                ctx.lineTo(x+27, y+32);
+                ctx.lineTo(x+37, y+32);
+                ctx.lineTo(x+27, y+32);
+                ctx.lineTo(x+27, y+38);
+                ctx.lineTo(x+27, y+24);
+                ctx.lineTo(x+22, y+24);
+                ctx.lineTo(x+22, y+18);
+                ctx.lineTo(x+16, y+18);
+                ctx.lineTo(x+16, y+15);
+                ctx.lineTo(x, y+15);
+                ctx.lineTo(x, y+20);
+                ctx.lineTo(x-5, y+20);
+                ctx.lineTo(x-5, y+10);
+                ctx.lineTo(x-2, y+10);
+                ctx.lineTo(x, y+10);
+                ctx.lineTo(x, y);
+                ctx.strokeStyle = "black";
+                ctx.stroke();
+                
+                //Sombras de los arbustos
+                rgb = "rgb(54,118,57)";
+                ctx.beginPath();
+                ctx.moveTo(x+10,y+5);
+                ctx.lineTo(x+17, y+5);
+                ctx.lineTo(x+17, y+10);
+                ctx.lineTo(x+20, y+10);
+                ctx.lineTo(x+20, y+15);
+                ctx.lineWidth = 4;
+                ctx.strokeStyle = rgb;
+                ctx.stroke();
+
+                ctx.beginPath();
+                ctx.moveTo(x+26,y+15);
+                ctx.lineTo(x+26, y+22);
+                ctx.lineTo(x+30, y+22);
+                ctx.lineWidth = 2;
+                ctx.strokeStyle = rgb;
+                ctx.stroke();
+                
+                ctx.beginPath();
+                ctx.moveTo(x+11,y+18);
+                ctx.lineTo(x+11, y+22);
+                ctx.lineTo(x+17, y+22);
+                ctx.lineTo(x+17, y+28);
+                ctx.lineTo(x+22, y+28);
+                ctx.lineTo(x+22, y+38);
+                ctx.lineTo(x+18, y+43);
+                ctx.lineTo(x+18, y+20);
+                ctx.lineWidth = 4;
+                ctx.strokeStyle = rgb;
+                ctx.stroke();
+                
+                ctx.beginPath();
+                ctx.moveTo(x+30,y+36);
+                ctx.lineTo(x+34, y+36);
+                ctx.lineTo(x+34, y+40);
+                ctx.lineTo(x+40, y+40);
+                ctx.lineTo(x+40, y+58);
+                ctx.lineTo(x+34, y+58);
+                ctx.lineTo(x+34, y+61);
+                ctx.lineTo(x+30, y+61);
+                ctx.lineTo(x+34, y+61);
+                ctx.lineTo(x+34, y+58);
+                ctx.lineTo(x+36, y+58);
+                ctx.lineTo(x+36, y+38);
+                ctx.lineWidth = 4;
+                ctx.strokeStyle = rgb;
+                ctx.stroke();
+                
+                
+                rgb = "rgb(132,255,186)";
+                ctx.beginPath();
+                ctx.moveTo(x,y+36);
+                ctx.lineTo(x+5, y+36);
+                ctx.lineTo(x+5, y+40);
+                ctx.lineTo(x+10, y+40);
+                ctx.lineTo(x+5, y+40);
+                ctx.lineTo(x+5, y+45);
+                ctx.lineTo(x+2, y+45);
+                ctx.lineTo(x+2, y+40);
+                ctx.lineTo(x-2, y+40);
+                ctx.lineWidth = 4;
+                ctx.strokeStyle = rgb;
+                ctx.stroke();
+
+                rgb = "rgb(132,255,186)";
+                ctx.beginPath();
+                ctx.moveTo(x+22,y+50);
+                ctx.lineTo(x+25, y+50);
+                ctx.lineTo(x+25, y+53);
+                ctx.lineTo(x+28, y+53);
+                ctx.lineTo(x+20, y+53);
+                ctx.lineTo(x+24, y+53);
+                ctx.lineTo(x+24, y+58);
+                ctx.lineWidth = 4;
+                ctx.strokeStyle = rgb;
+                ctx.stroke();
+                
+            }
+            dibujarArbusto(30,613);
+            dibujarArbusto(60,613);
+            dibujarArbusto(840,613);
+            dibujarArbusto(1400,613);
+            dibujarArbusto(1450,613);
+
+
+            //tubo
+            ctx.strokeStyle = "black";
+            dibujarRect(985,525,150,152,"green",12);
+            dibujarRect(970,440,180,80,"green",15);
+
+            rgb = "lightgreen";
+            ctx.strokeStyle = rgb;
+            dibujarRect(977,441.5,5,78,rgb,1);
+            dibujarRect(990,529,5,147,rgb,1);
+
+            dibujarRect(990,441.5,16,78,rgb,1);
+            dibujarRect(1003,529,16,147,rgb,1);
+
+            dibujarRect(1025,441.5,5,78,rgb,1);
+            dibujarRect(1030,529,5,147,rgb,1);
+            
+            dibujarRect(1090,441.5,5,78,rgb,1);
+            dibujarRect(1085,529,5,147,rgb,1);
+            
+            ctx.strokeStyle = "black"
+            dibujarRect(1100,440,6,79,"black",1);
+            dibujarRect(1095,528,5,148,"black",1);
+            
+            dibujarRect(1111,440,3,78,"black",1);
+            dibujarRect(1105,528,3,148,"black",1);
+            
+            dibujarRect(1122,440,12,79,"black",1);
+            dibujarRect(1115,528,12,148,"black",1);
+            
+            dibujarRect(1142,440,8,79,"black",1);
+            dibujarRect(1133,528, 2,148,"black",1);
+
+            //planta
+            //contorno de cabeza
+            ctx.lineWidth = 5;
+            ctx.beginPath();
+            ctx.moveTo(1005,290);
+            ctx.lineTo(1005,275);
+            ctx.lineTo(1015,275);
+            ctx.lineTo(1015,260);
+            ctx.lineTo(1025,260);
+            ctx.lineTo(1025,250);
+            ctx.lineTo(1080,250);
+            ctx.lineTo(1080,260);
+            ctx.lineTo(1085,260);
+            ctx.lineTo(1085,265);
+            ctx.lineTo(1090,265);
+            ctx.lineTo(1090,270);
+            ctx.lineTo(1098,270);
+            ctx.lineTo(1098,280);
+            ctx.lineTo(1105,280);
+            ctx.lineTo(1105,310);
+            ctx.lineTo(1100,310);
+            ctx.lineTo(1100,320);
+            ctx.lineTo(1090,320);
+            ctx.lineTo(1090,325);
+            ctx.lineTo(1095,325);
+            ctx.lineTo(1095,330);
+            ctx.lineTo(1080,330);
+            ctx.lineTo(1080,340);
+            ctx.lineTo(1070,340);
+            ctx.lineTo(1070,347);
+            ctx.lineTo(1040,347);
+            ctx.lineTo(1040,338);
+            ctx.lineTo(1030,338);
+            ctx.lineTo(1030,330);
+            ctx.fillStyle = "red";
+            ctx.fill();
+            ctx.stroke();
+            //relleno de boca para ser "transparente"
+            rgb = "rgb(179, 238, 254)";
+            ctx.lineWidth = 5;
+            ctx.beginPath();
+            ctx.arc(1020,310,20,3.4,2.2);
+            ctx.fillStyle = rgb;
+            ctx.fill();
+            //manchas blancas de la cabeza
+            dibujarCuadro(1020,270,10,"white",1);
+            dibujarCuadro(1050,257,10,"white",1);
+            dibujarCuadro(1080,290,10,"white",1);
+            dibujarCuadro(1060,320,10,"white",1);
+            //boca
+            ctx.beginPath();
+            ctx.lineWidth = 5;
+            ctx.moveTo(1050,285);
+            ctx.lineTo(1020,285);
+            ctx.lineTo(1020,289);
+            ctx.lineTo(990,289);
+            ctx.lineTo(990,300);
+            ctx.lineTo(980,300);
+            ctx.lineTo(980,310);
+            ctx.lineTo(1010,310);
+            ctx.lineTo(1010,300);
+            ctx.lineTo(1040,300);
+            ctx.lineTo(1033,300);
+            ctx.lineTo(1033,310);
+            ctx.lineTo(1025,310);
+            ctx.lineTo(1025,315);
+            ctx.lineTo(1020,315);
+            ctx.lineTo(1020,320);
+            ctx.lineTo(1005,320);
+            ctx.lineTo(1005,328);
+            ctx.lineTo(998,328);
+            ctx.lineTo(998,339);
+            ctx.lineTo(1025,339);
+            ctx.lineTo(1025,332);
+            ctx.lineTo(1035,332);
+            ctx.lineTo(1035,325);
+            ctx.lineTo(1050,325);
+            ctx.lineTo(1050,315);
+            ctx.lineTo(1060,315);
+            ctx.lineTo(1060,295);
+            ctx.lineTo(1050,295);
+            ctx.lineTo(1050,285);
+            ctx.fillStyle = "white";
+            ctx.fill();
+            ctx.stroke();
+
+            //cuerpo de planta contorno
+            ctx.beginPath();
+            ctx.lineWidth = 5;
+            ctx.moveTo(1040,350);
+            ctx.lineTo(1040,370);
+            ctx.lineTo(1030,370);
+            ctx.lineTo(1030,360);
+            ctx.lineTo(1020,360);
+            ctx.lineTo(1020,355);
+            ctx.lineTo(1005,355);
+            ctx.lineTo(1005,360);
+            ctx.lineTo(998,360);
+            ctx.lineTo(998,375);
+            ctx.lineTo(1005,375);
+            ctx.lineTo(1005,385);
+            ctx.lineTo(1015,385);
+            ctx.lineTo(1015,393);
+            ctx.lineTo(1025,393);
+            ctx.lineTo(1025,400);
+            ctx.lineTo(1035,400);
+            ctx.lineTo(1035,405);
+            ctx.lineTo(1040,405);
+            ctx.lineTo(1040,436);
+            //ea, empezamos la mitad derecha
+            ctx.lineTo(1060,436);
+            ctx.lineTo(1060,395);
+            ctx.lineTo(1070,395);
+            ctx.lineTo(1070,385);
+            ctx.lineTo(1090,385);
+            ctx.lineTo(1090,375);
+            ctx.lineTo(1100,375);
+            ctx.lineTo(1100,355);
+            ctx.lineTo(1075,355);
+            ctx.lineTo(1075,365);
+            ctx.lineTo(1065,365);
+            ctx.lineTo(1065,375);
+            ctx.lineTo(1060,375);
+            ctx.lineTo(1060,350);
+            ctx.fillStyle = "lightgreen";
+            ctx.fill();
+            ctx.stroke();
+
+            //cuerpo de planta detalles
+            ctx.beginPath();
+            ctx.moveTo(1040,370);
+            ctx.lineTo(1040,390);
+            ctx.lineTo(1040,380);
+            ctx.lineTo(1025,380);
+            ctx.lineTo(1025,376);
+            ctx.lineTo(1015,376);
+            ctx.lineTo(1015,365);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.moveTo(1060,370);
+            ctx.lineTo(1060,388);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.lineWidth = 4;
+            ctx.moveTo(1060,378)
+            ctx.lineTo(1080,378);
+            ctx.lineTo(1080,370);
+            ctx.lineTo(1085,370);
+            ctx.lineTo(1085,365);
+            ctx.stroke();
+
+            //petalos traseros
+            ctx.beginPath();
+            ctx.lineWidth = 5;
+            ctx.moveTo(1010, 434);
+            ctx.lineTo(1010,425);
+            ctx.lineTo(995,425);
+            ctx.lineTo(995,410);
+            ctx.lineTo(1002,410);
+            ctx.lineTo(1002,398);
+            ctx.lineTo(1010,398);
+            ctx.lineTo(1010,405);
+            ctx.lineTo(1020,405);
+            ctx.lineTo(1020,410);
+            ctx.lineTo(1030,410);
+            ctx.lineTo(1030,415);
+            ctx.lineTo(1040,415);
+            ctx.lineTo(1040,434);
+            ctx.fill();
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.lineWidth = 5;
+            ctx.moveTo(1062, 435);
+            ctx.lineTo(1090,435);
+            ctx.lineTo(1090,420);
+            ctx.lineTo(1097,420);
+            ctx.lineTo(1097,405);
+            ctx.lineTo(1090,405);
+            ctx.lineTo(1090,395);
+            ctx.lineTo(1078,395);
+            ctx.lineTo(1078,405);
+            ctx.lineTo(1070,405);
+            ctx.lineTo(1070,415);
+            ctx.lineTo(1062,415);
+            ctx.fill();
+            ctx.stroke();
+            
+            ctx.beginPath();
+            ctx.lineWidth = 5;
+            ctx.moveTo(1062, 435);
+            ctx.lineTo(1070,435);
+            ctx.lineTo(1070,424);
+            ctx.lineTo(1070,424);
+            ctx.lineTo(1081,424);
+            ctx.lineTo(1081,412);
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.lineWidth = 5;
+            ctx.moveTo(1030, 435);
+            ctx.lineTo(1030,425);
+            ctx.lineTo(1020,425);
+            ctx.lineTo(1020,417);
+            ctx.lineTo(1010,417);
+            ctx.stroke();
 
     </script>
 </body>
