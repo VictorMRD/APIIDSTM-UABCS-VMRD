@@ -6,13 +6,22 @@
     <title>Document</title>
 </head>
     <body>
+        <img id="mario" src="mario.png" alt="MDN" />
         <canvas id="myCanvas" width="1470" height="800" style="border: 2px solid black"></canvas>
         <script>
+            
             const canvas = document.getElementById("myCanvas");
             const ctx = canvas.getContext("2d");
             let rgb;
-
-            function dibujarCuadro(x, y, width, color, ln){
+            let xplayer = 20;
+            const img = document.getElementById("mario");
+                img.onload = function() {
+                    ctx.drawImage(img, xplayer, 610);
+                };
+            //controles
+            let dir;
+            function repaint(){
+                function dibujarCuadro(x, y, width, color, ln){
                 ctx.lineWidth = ln;
                 ctx.beginPath();
                 ctx.fillStyle = color;
@@ -481,6 +490,7 @@
             dibujarCuadro(1050,257,10,"white",1);
             dibujarCuadro(1080,290,10,"white",1);
             dibujarCuadro(1060,320,10,"white",1);
+
             //boca
             ctx.beginPath();
             ctx.lineWidth = 5;
@@ -638,7 +648,81 @@
             ctx.lineTo(1020,417);
             ctx.lineTo(1010,417);
             ctx.stroke();
+            
+            dibujarCuadro(105,305,3,"black");
+            dibujarCuadro(172,305,3,"black");
+            dibujarCuadro(105,372,3,"black");
+            dibujarCuadro(172,372,3,"black");
 
+            
+            dibujarCuadro(345,125,3,"black");
+            dibujarCuadro(405,125,3,"black");
+            dibujarCuadro(345,190,3,"black");
+            dibujarCuadro(405,190,3,"black");
+
+            
+            dibujarCuadro(345+80,125,3,"black");
+            dibujarCuadro(405+87,125,3,"black");
+            dibujarCuadro(345+80,125+65,3,"black");
+            dibujarCuadro(405+87,125+65,3,"black");
+
+            
+            dibujarCuadro(1205,205,3,"black");
+            dibujarCuadro(1205,272,3,"black");
+            dibujarCuadro(1272,272,3,"black");
+            dibujarCuadro(1272,205,3,"black");
+
+            ctx.font = "48px serif";
+            ctx.fillText("Use A or D to move mario", 10, 50);
+
+                draw();
+            }
+
+            function draw(){
+                ctx.drawImage(img, xplayer, 612);
+            }
+
+            document.addEventListener("keydown", function (e){
+                switch(e.keyCode){
+                    case 87:
+                    case 83:
+                    case 68:
+                    case 65:
+                        dir = e.keyCode;
+                        break;
+                }
+            });
+
+            let flag = false;
+            function update(){
+                //Controladores de movimiento
+                //Controlador de rebote en pared
+                console.log(dir);
+                switch(dir){ 
+                    case 68:
+                        xplayer = (xplayer + 2);
+                        if(xplayer>1470)
+                            xplayer =-20;
+                        break;
+                    case 65:
+                        xplayer = (xplayer - 2);
+                        if(xplayer<-20)
+                            xplayer =1490;
+                        break;
+                }
+                repaint();
+                window.requestAnimationFrame(update);
+            }
+
+            window.requestAnimationFrame = (function () {
+                return window.requestAnimationFrame ||
+                    window.webkitRequestAnimationFrame ||
+                    window.mozRequestAnimationFrame ||
+                    function (callback) {
+                        window.setTimeout(callback, 17);
+                    };
+            }());
+            window.requestAnimationFrame(update);
     </script>
 </body>
 </html>
