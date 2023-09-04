@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <canvas id="myCanvas" width="1470" height="800" style="border: 2px solid black"></canvas>
+	<script>
+	//A esto le tenemos que agregar un objeto jugador
+	//Y un objeto muro?
+		const canvas = document.getElementById("myCanvas");
+		const ctx = canvas.getContext("2d");
+		let dir = 0;
+		let dir2;
+        let bandera = true;
+        let flag = false;
+		let velocidad = 3;
+		let puntuacion = 0
+
+		class Wall {
+			constructor(_x,_y,_width, _height){
+				this.width = _width;
+				this.height = _height;
+				this.x = _x;
+				this.y = _y;
+			}
+
+			set xpos(_x) {
+				this.x = _x;
+			}
+
+			set ypos(_y) {
+				this.y = _y;
+			}
+
+			set wallWidth(_width){
+				this.width = _width;
+			}
+
+			set wallHeight(_height){
+				this.height = _height;
+			}
+
+			get xPos() {
+				return this.x;
+			}
+
+			get yPos() {
+				return this.y;
+			}
+
+			get getWidth(){
+				return this.width;
+			}
+
+			get getHeight(){
+				return this.height;
+			}
+		}
+
+		class Player {
+			constructor(_x,_y,_width){
+				this.width = _width;
+				this.x = _x;
+				this.y = _y;
+			}
+			set setX(x){
+				this.x = x;
+			}
+
+			get getX() {
+				return this.x;
+			}
+
+			set setY(y){
+				this.y = y;
+			}
+
+			get getY() {
+				return this.y;
+			}
+
+			set setWidth(width){
+				this.width = width;
+			}
+
+			get getWidth() {
+				return this.width;
+			}
+			
+
+		}
+		
+		class Coin {
+			constructor(_x,_y,_radius,_startAngle, _endAngle){
+				this.radius = _radius;
+				this.startAngle = _startAngle;
+				this.endAngle = _endAngle;
+				this.x = _x;
+				this.y = _y;
+			}
+
+			set setXPos(_x) {
+				this.x = _x;
+			}
+
+			set setYPos(_y) {
+				this.y = _y;
+			}
+
+			set setCoinRadius(_radius){
+				this.radius = _radius;
+			}
+
+			set coinEndAngle(_endAngle){
+				this.endAngle = _endAngle;
+			}
+
+			get getXPos() {
+				return this.x;
+			}
+
+			get getYPos() {
+				return this.y;
+			}
+		}
+
+		let player = new Player(600,350,100);
+		let wall1 = [new Wall(340,200,800,50),new Wall(340,600,800,50),new Wall(100,300,50,800)];
+		let coin = [new Coin(300,100, 20,1,1),new Coin(500,100, 20,1,1),new Coin(900,100, 20,1,1),new Coin(800,100, 20,1,1),
+		new Coin(200,300, 20,1,1),new Coin(500,100, 20,1,1),new Coin(900,100, 20,1,1),new Coin(800,100, 20,1,1)];
+        //Aca pintamos los elementos
+		function repaint(){
+			ctx.beginPath();
+			ctx.fillStyle = "white";
+			ctx.rect(0, 0, 1470, 800);
+			ctx.fill();
+
+			for(let findex = 0; findex < wall1.length; findex++){
+				ctx.beginPath();
+				ctx.fillStyle = "black";
+				ctx.rect(wall1[findex].xPos, wall1[findex].yPos, wall1[findex].getWidth, wall1[findex].getHeight);
+				ctx.stroke();
+				ctx.fill();
+			}
+			
+			for(let findex = 0; findex < coin.length; findex++){
+				ctx.beginPath();
+				ctx.fillStyle = "yellow"
+				ctx.arc(coin[findex].getXPos, coin[findex].getYPos, coin[findex].radius,coin[findex].endAngle,10);
+				ctx.fill();
+				ctx.stroke();
+			}
+
+			draw();
+			if(flag){
+				ctx.fillStyle = "black";
+				oscurecerPantalla();
+			}
+			
+			ctx.fillStyle = "black";
+			ctx.font = "50px serif";
+  			ctx.fillText("Puntuacion: " + (puntuacion)*10, 10,60);
+			
+			ctx.font = "40px serif";
+  			ctx.fillText("Velocidad: " + (velocidad), 10,110);
+		}
+
+		function draw(){
+			ctx.beginPath();
+			ctx.fillStyle = "blue";
+			ctx.rect(player.getX, player.getY, player.getWidth, player.getWidth);
+			ctx.stroke();
+			ctx.fill();
+		}
+
+		document.addEventListener("keydown", function (e){
+				switch(e.keyCode){
+					case 32:
+						flag = !flag;
+						break;
+					case 87:
+					case 83:
+					case 68:
+					case 65:
+						if(!flag){
+							dir = e.keyCode;
+							dir2 = dir;
+						}
+						break;
+				}
+		});
+
+		function oscurecerPantalla(){
+			console.log("oscureciendo");
+			ctx.font = "100px serif";
+  			ctx.fillText("Pause", 600, 400);
+			
+			ctx.beginPath();
+			ctx.fillStyle = "rgb(255,255,255, 0.3)";
+			ctx.rect(0,0,1470,800);
+			ctx.fill();
+		}
+
+		function update(){
+			//Controladores de movimiento
+			//Controlador de rebote en pared
+			console.log(dir);
+			console.log(flag);
+			switch(dir){ 
+				case 87:
+					if(!flag){
+						player.setY = (player.getY - velocidad);
+						if(player.getY<0) {dir=83}
+					}
+					break;
+				case 83:
+					if(!flag){
+						player.setY = (player.getY + velocidad);
+						if(player.getY>(canvas.height - player.getWidth)){dir=87}
+					}
+					break;
+				case 68:
+					if(!flag){
+						player.setX = (player.getX + velocidad);
+						if(player.getX>canvas.width - player.getWidth){dir=65}
+					}
+					break;
+				case 65:
+					if(!flag){
+						player.setX = (player.getX - velocidad);
+						if(player.getX<0) {dir=68}
+					}
+					break;
+				
+			}
+			
+			if(dir != 0)
+				for(let findex = 0; findex < wall1.length; findex++){
+					if(player.getX < wall1[findex].xPos + wall1[findex].getWidth &&  player.getX + player.getWidth > wall1[findex].xPos && 
+					player.getY < wall1[findex].yPos + wall1[findex].getHeight &&  player.getY + player.getWidth > wall1[findex].yPos){	
+						
+						//correcion para sacarlo del muro
+						if(dir == 87)
+							player.setY = (player.getY + velocidad);
+						if(dir == 83)
+							player.setY = (player.getY - velocidad);
+						if(dir == 68)
+							player.setX = (player.getX - velocidad);
+						if(dir == 65)
+							player.setX = (player.getX + velocidad);
+								
+						dir = 0;
+
+						//Por si queremos que rebote
+						/*
+						if(dir == 87)
+							dir = 83;
+						else if(dir == 83)
+							dir = 87w
+						else if(dir == 68)
+							dir = 65;
+						else
+							dir = 68
+						*/
+						console.log("Collision");
+						repaint();
+					}   
+				}
+				for(let findex = 0; findex < coin.length; findex++){
+					if(player.getX < coin[findex].x + coin[findex].radius &&  player.x + player.getWidth > coin[findex].x - coin[findex].radius&& 
+					player.getY < coin[findex].y + coin[findex].radius &&  player.y + player.getWidth > coin[findex].y - coin[findex].radius){	
+						coin[findex].setXPos = (Math.floor(Math.random() * 1470));
+						coin[findex].setYPos = (Math.floor(Math.random() * 800));
+						if(cont == 2){
+							cont = 0;
+							velocidad += 0.5;
+						}
+						puntuacion++;
+						cont++;
+					}
+				}
+			repaint();
+			window.requestAnimationFrame(update);
+		}
+		let cont = 0;
+		window.requestAnimationFrame = (function () {
+			return window.requestAnimationFrame ||
+				window.webkitRequestAnimationFrame ||
+				window.mozRequestAnimationFrame ||
+				function (callback) {
+					window.setTimeout(callback, 17);
+				};
+		}());
+		window.requestAnimationFrame(update);
+	</script>
+</body>
+</html>
