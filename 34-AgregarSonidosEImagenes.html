@@ -7,12 +7,21 @@
 </head>
 <body>
 	<img id="chango" src="./chango.png" width="50px" style="display: none;">
+	<img id="playerimg" src="./banana.png" width="50px" style="display: none;">
+	<audio id="myAudio">
+		<source src="monkeysound.mp3" type="audio/mpeg">
+		Your browser does not support the audio element.
+	</audio>
+	
     <canvas id="myCanvas" width="1470" height="800" style="border: 2px solid black"></canvas>
 	<script>
 	//A esto le tenemos que agregar un objeto jugador
 	//Y un objeto muro?
 		const canvas = document.getElementById("myCanvas");
 		const ctx = canvas.getContext("2d");
+
+		const audio = document.getElementById('myAudio');
+	
 		let dir = 0;
 		let dir2;
         let bandera = true;
@@ -20,7 +29,11 @@
 		let velocidad = 3;
 		const img = document.getElementById("chango");
 		const imgw = 50;
+		const imgp = document.getElementById("playerimg");
+		const imgwp = 50;
 		let puntuacion = 0;
+		let flag2 = false;
+		let enemyspeed = 2;
 
 		class Wall {
 			constructor(_x,_y,_width, _height){
@@ -188,11 +201,18 @@
 		}
 
 		let player = new Player(600,350,100);
-		let wall1 = [new Wall(340,200,800,50),new Wall(340,600,800,50),new Wall(150,300,50,300)];
+		let wall1 = [new Wall(340,200,800,50),new Wall(340,600,800,50),new Wall(150,300,50,300),new Wall(20,20,50,50),new Wall(20,500,50,50),
+		new Wall(40,700,50,50),new Wall(300,700,50,50),new Wall(1250,20,50,50),new Wall(1200,400,50,50),new Wall(1400,300,50,50),new Wall(1400,500,50,50)];
 		let coin = [new Coin(300,100, 20,1,1),new Coin(500,100, 20,1,1),new Coin(900,100, 20,1,1),new Coin(800,100, 20,1,1),
 		new Coin(200,300, 20,1,1),new Coin(500,100, 20,1,1),new Coin(900,100, 20,1,1),new Coin(800,100, 20,1,1)];
-		let enemies = [new Enemy(0,0,50,img,Math.round(Math.random()),0),new Enemy(100,0,50,img,Math.round(Math.random()),0),new Enemy(200,0,50,img,Math.round(Math.random()),0),new Enemy(300,0,50,img,Math.round(Math.random()),0),
-		new Enemy(400,0,50,img,Math.round(Math.random()),0),new Enemy(600,0,50,img,Math.round(Math.random()),0),new Enemy(700,0,50,img,Math.round(Math.random()),0),new Enemy(800,0,50,img,Math.round(Math.random()),0),new Enemy(900,0,50,img,Math.round(Math.random()),0)];
+		/*let enemies = [new Enemy(0,0,50,img,Math.round(Math.random()),0),new Enemy(100,0,50,img,Math.round(Math.random()),0),new Enemy(200,0,50,img,Math.round(Math.random()),0),new Enemy(300,0,50,img,Math.round(Math.random()),0),
+		new Enemy(400,0,50,img,Math.round(Math.random()),0),new Enemy(600,0,50,img,Math.round(Math.random()),0),new Enemy(700,0,50,img,Math.round(Math.random()),0),new Enemy(800,0,50,img,Math.round(Math.random()),0),new Enemy(900,0,50,img,Math.round(Math.random()),0)];*/
+		let enemies = [new Enemy(100,20,50,img,Math.round(Math.random()),0),new Enemy(100,20,50,img,Math.round(Math.random()),0),new Enemy(100,20,50,img,Math.round(Math.random()),0)
+		,new Enemy(100,20,50,img,Math.round(Math.random()),0),new Enemy(100,20,50,img,Math.round(Math.random()),0),new Enemy(100,20,50,img,Math.round(Math.random()),0)
+		,new Enemy(100,20,50,img,Math.round(Math.random()),0),new Enemy(100,20,50,img,Math.round(Math.random()),0),new Enemy(100,20,50,img,Math.round(Math.random()),0)
+		,new Enemy(100,20,50,img,Math.round(Math.random()),0),new Enemy(100,20,50,img,Math.round(Math.random()),0),new Enemy(100,20,50,img,Math.round(Math.random()),0)
+		,new Enemy(100,20,50,img,Math.round(Math.random()),0),new Enemy(100,20,50,img,Math.round(Math.random()),0),new Enemy(100,20,50,img,Math.round(Math.random()),0)
+		,new Enemy(100,20,50,img,Math.round(Math.random()),0),new Enemy(100,20,50,img,Math.round(Math.random()),0),new Enemy(100,20,50,img,Math.round(Math.random()),0)];
         //Aca pintamos los elementos
 		function repaint(){
 			ctx.beginPath();
@@ -218,13 +238,13 @@
   		
 			for(let findex = 0; findex < enemies.length; findex++){
 				if(enemies[findex].movementx == 1){
-					enemies[findex].x +=1;
+					enemies[findex].x +=enemyspeed;
 				}else if(enemies[findex].movementx == 0){
-					enemies[findex].x -=1;
-				}else if(enemies[findex].movementx == 3 && enemies[findex].movementy == 0){
-					enemies[findex].y -=1;
-				}else if(enemies[findex].movementx == 3 && enemies[findex].movementy == 1){
-					enemies[findex].y +=1;
+					enemies[findex].x -=enemyspeed;
+				}else if(enemies[findex].movementy == 0){
+					enemies[findex].y -=enemyspeed;
+				}else if(enemies[findex].movementy == 1){
+					enemies[findex].y +=enemyspeed;
 				}
 				ctx.drawImage(enemies[findex].image, enemies[findex].getX, enemies[findex].getY, enemies[findex].getWidth, enemies[findex].getWidth);
 			}
@@ -244,11 +264,7 @@
 		}
 
 		function draw(){
-			ctx.beginPath();
-			ctx.fillStyle = "blue";
-			ctx.rect(player.getX, player.getY, player.getWidth, player.getWidth);
-			ctx.stroke();
-			ctx.fill();
+			ctx.drawImage(imgp, player.getX, player.getY, player.getWidth, player.getWidth);
 		}
 
 		document.addEventListener("keydown", function (e){
@@ -276,6 +292,171 @@
 			ctx.fillStyle = "rgb(255,255,255, 0.3)";
 			ctx.rect(0,0,1470,800);
 			ctx.fill();
+		}
+		
+		function cambio(){
+			if(Math.round(Math.random()) == 1){
+				flag2 = true;
+			}else
+				flag2 = false;
+			return flag2;
+		}
+
+		let cambiores;
+		function tocarBorde(changolion){
+			if(changolion.movementx == 0){
+				changolion.x += 5;
+				console.log("Me estaba moviendo hacia la izquierda");
+				if(cambio()){
+					console.log("TOCO LA X");
+					cambiores = cambio();
+					while(true){
+						console.log(cambiores);
+						console.log(changolion.movementx);
+						console.log(cambiores && changolion.movementx == 1);
+						console.log(!cambiores && changolion.movementx == 0);
+						if(cambiores && changolion.movementx == 1)
+							cambiores = cambio();
+						else if(!cambiores && changolion.movementx == 0)
+							cambiores = cambio();
+						else
+							break;
+					}
+					changolion.movementy = 3;
+					changolion.movementx = cambiores ? 1 : 0;
+				}else{
+					console.log("TOCO LA Y");
+					cambiores = cambio();
+					while(true){
+						console.log(cambiores);
+						console.log(changolion.movementx);
+						console.log(cambiores && changolion.movementx == 1);
+						console.log(!cambiores && changolion.movementx == 0);
+						if(cambiores && changolion.movementy == 1)
+							cambiores = cambio();
+						else if(!cambiores && changolion.movementy == 0)
+							cambiores = cambio();
+						else
+							break;
+					}
+					changolion.movementx = 3;
+					changolion.movementy = cambiores ? 1 : 0;
+				}
+			}else if(changolion.movementx == 1){
+				changolion.x -= 5;
+				console.log("Me estaba moviendo hacia la derecha");
+				if(cambio()){
+					console.log("TOCO LA X");
+					cambiores = cambio();
+					while(true){
+						console.log(cambiores);
+						console.log(changolion.movementx);
+						console.log(cambiores && changolion.movementx == 1);
+						console.log(!cambiores && changolion.movementx == 0);
+						if(cambiores && changolion.movementx == 1)
+							cambiores = cambio();
+						else if(!cambiores && changolion.movementx == 0)
+							cambiores = cambio();
+						else
+							break;
+					}
+					changolion.movementy = 3;
+					changolion.movementx = cambiores ? 1 : 0;
+				}else{
+					console.log("TOCO LA Y");
+					cambiores = cambio();
+					while(true){
+						console.log(cambiores);
+						console.log(changolion.movementx);
+						console.log(cambiores && changolion.movementx == 1);
+						console.log(!cambiores && changolion.movementx == 0);
+						if(cambiores && changolion.movementy == 1)
+							cambiores = cambio();
+						else if(!cambiores && changolion.movementy == 0)
+							cambiores = cambio();
+						else
+							break;
+					}
+					changolion.movementx = 3;
+					changolion.movementy = cambiores ? 1 : 0;
+				}
+			}else if(changolion.movementy == 1){
+				changolion.y -= 5;
+				console.log("Me estaba moviendo hacia la arriba");
+				if(cambio()){
+					console.log("TOCO LA X");
+					cambiores = cambio();
+					while(true){
+						console.log(cambiores);
+						console.log(changolion.movementx);
+						console.log(cambiores && changolion.movementx == 1);
+						console.log(!cambiores && changolion.movementx == 0);
+						if(cambiores && changolion.movementx == 1)
+							cambiores = cambio();
+						else if(!cambiores && changolion.movementx == 0)
+							cambiores = cambio();
+						else
+							break;
+					}
+					changolion.movementy = 3;
+					changolion.movementx = cambiores ? 1 : 0;
+				}else{
+					console.log("TOCO LA Y");
+					cambiores = cambio();
+					while(true){
+						console.log(cambiores);
+						console.log(changolion.movementx);
+						console.log(cambiores && changolion.movementx == 1);
+						console.log(!cambiores && changolion.movementx == 0);
+						if(cambiores && changolion.movementy == 1)
+							cambiores = cambio();
+						else if(!cambiores && changolion.movementy == 0)
+							cambiores = cambio();
+						else
+							break;
+					}
+					changolion.movementx = 3;
+					changolion.movementy = cambiores ? 1 : 0;
+				}
+			}else if(changolion.movementy == 0){
+				console.log("Me estaba moviendo hacia la derecha");
+				changolion.y += 5;
+				if(cambio()){
+					console.log("TOCO LA X");
+					cambiores = cambio();
+					while(true){
+						console.log(cambiores);
+						console.log(changolion.movementy);
+						console.log(cambiores && changolion.movementy == 1);
+						console.log(!cambiores && changolion.movementy == 0);
+						if(cambiores && changolion.movementy == 1)
+							cambiores = cambio();
+						else if(!cambiores && changolion.movementy == 0)
+							cambiores = cambio();
+						else
+							break;
+					}
+					changolion.movementy = 3;
+					changolion.movementx = cambiores ? 1 : 0;
+				}else{
+					console.log("TOCO LA Y");
+					cambiores = cambio();
+					while(true){
+						console.log(cambiores);
+						console.log(changolion.movementy);
+						console.log(cambiores && changolion.movementy == 1);
+						console.log(!cambiores && changolion.movementy == 0);
+						if(cambiores && changolion.movementy == 1)
+							cambiores = cambio();
+						else if(!cambiores && changolion.movementy == 0)
+							cambiores = cambio();
+						else
+							break;
+					}
+					changolion.movementx = 3;
+					changolion.movementy = cambiores ? 1 : 0;
+				}
+			}
 		}
 
 		function update(){
@@ -345,7 +526,10 @@
 					if(player.getX < enemies[findex].getX + enemies[findex].getWidth &&  player.getX + player.getWidth > enemies[findex].getX && 
 					player.getY < enemies[findex].getY + enemies[findex].getWidth &&  player.getY +	 player.getWidth > enemies[findex].getY){	
 						
-						console.log("CHANGO ATTACKS");
+						puntuacion -= 1;
+						tocarBorde(enemies[findex]);
+						enemies[findex].x += 50;
+						audio.play();
 					}   
 				}
 
@@ -354,17 +538,23 @@
 					for(let sindex = 0; sindex < enemies.length; sindex++){
 						if(enemies[sindex].getX < wall1[findex].xPos + wall1[findex].getWidth &&  enemies[sindex].getX + enemies[sindex].getWidth > wall1[findex].xPos && 
 						enemies[sindex].getY < wall1[findex].yPos + wall1[findex].getHeight &&  enemies[sindex].getY + enemies[sindex].getWidth > wall1[findex].yPos){	
-							console.log("eh loco me estoy chocando");
-							if(enemies[sindex].movementx == 0){
-								enemies[sindex].setMovementx = 1;
-								console.log("Ay apoco si mamon");
-							}
+							tocarBorde(enemies[sindex]);
 						}		
-						if(enemies[sindex].getX == 0){
-							enemies[sindex].setMovementx = 1;
-						}else if(enemies[sindex].getX == 1470 - enemies[sindex].getWidth){
-							enemies[sindex].setMovementx = 0;
+						//CAMBIO ALEATORIO DE DIRECCIÓN CON BORDE
+						if(enemies[sindex].getX <= 0){
+							console.log("Choque con el borde izquierdo");
+							tocarBorde(enemies[sindex]);
+						}else if(enemies[sindex].getX >= 1470 - enemies[sindex].getWidth){
+							console.log("Choque con el borde derecho");
+							tocarBorde(enemies[sindex]);
+						}else if(enemies[sindex].getY <= 0){
+							console.log("Choque con el borde de arriba");
+							tocarBorde(enemies[sindex]);
+						}else if(enemies[sindex].getY >= 800 - enemies[sindex].getWidth){
+							console.log("Choque con el borde de abajo");
+							tocarBorde(enemies[sindex]);
 						}
+
 					}   
 				}
 			
