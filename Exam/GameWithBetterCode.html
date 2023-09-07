@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="Game.css">
+        <title>Pacman v0.1</title>
+    </head>
+    <body>
+        <canvas id="myCanvas" width="1460" height="800" style="border: 2px solid black"></canvas>
+        <script>
+            const canvas = document.getElementById("myCanvas");
+            const ctx = canvas.getContext("2d");    
+            
+
+            //Agregar detector de teclas 
+            document.addEventListener("keydown", (e) =>{
+                console.log(e.keyCode);
+            })
+
+            //Variables de control del tablero
+            let x = 0;
+            let y = 0;
+            let fcolor = "gray", scolor = "lightblue", supp;
+
+            //Clases
+            class Player(){
+                constructor(){
+                    
+                }
+            }
+
+            //Creacion de cuadricula
+            function tablero(){
+                for(let yindex = 0; yindex <60; yindex++){
+                    for(let index = 0; index <73; index++){
+                        ctx.beginPath();
+                        ctx.rect(x+(index*20),y,20,20);
+                        ctx.stroke();
+                        ctx.fillStyle = index%2 ? fcolor : scolor;
+                        ctx.fill();
+                    }
+                    y = (yindex*20);
+                    supp = fcolor;
+                    fcolor = scolor;
+                    scolor = supp;
+                }
+            }
+
+            //Controles del jugador
+            let fotogramasPorSegundo = 4;
+            function Animacion() {
+                setTimeout(function() {
+                    window.requestAnimationFrame(Animacion);
+                    console.log("Hola");
+                }, 1000 / fotogramasPorSegundo);
+            }
+
+            Animacion();
+            tablero();
+        </script>
+    </body>
+</html>
