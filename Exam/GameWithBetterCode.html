@@ -4,10 +4,10 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="Game.css">
-        <title>Pacman v0.1</title>
+        <title>Pacman v0.2</title>
     </head>
     <body>
-        <canvas id="myCanvas" width="1460" height="800" style="border: 2px solid black"></canvas>
+        <canvas id="myCanvas" width="1200" height="800" style="border: 2px solid black"></canvas>
         <script>
             const canvas = document.getElementById("myCanvas");
             const ctx = canvas.getContext("2d");    
@@ -16,48 +16,142 @@
             //Agregar detector de teclas 
             document.addEventListener("keydown", (e) =>{
                 console.log(e.keyCode);
+                switch (event.key) {
+                    case "w":
+                        direction = 90; // Up
+                        break;
+                    case "a":
+                        direction = 180; // Left
+                        break;
+                    case "s":
+                        direction = 270; // Down
+                        break;
+                    case "d":
+                        direction = 0; // Right
+                        break;
+                }
             })
 
-            //Variables de control del tablero
-            let x = 0;
-            let y = 0;
-            let fcolor = "gray", scolor = "lightblue", supp;
-
             //Clases
-            class Player(){
-                constructor(){
-                    
+            class DetectionParam{
+                constructor(_x,_y,_width,_height){
+                    this.x = _x;
+                    this.y = _y;
+                    this.width = _width;
+                    this.height = _height;
+                }
+                set setX(_x){
+                    this.x = _x;
+                }
+                get getX(){
+                    return this.x;
+                }
+                set setY(_y){
+                    this.y = _y;
+                }
+                get getY(){
+                    return this.y;
+                }
+                set setWidth(_width){
+                    this.width = _width;
+                }
+                get getWidth(){
+                    return this.width;
+                }
+                set setHeight(_height){
+                    this.height = _height;
+                }
+                get getHeight(){
+                    return this.height;
+                }
+                peroSiFunciona() {
+                    console.log("Hola");
+                }
+            }
+            class Player extends DetectionParam{
+                constructor(_x,_y,_width,_height){
+                    super(_x,_y,_width,_height);
+                }
+            }
+            class Wall extends DetectionParam{
+                constructor(_x,_y,_width,_height){
+                    super(_x,_y,_width,_height);
                 }
             }
 
-            //Creacion de cuadricula
-            function tablero(){
-                for(let yindex = 0; yindex <60; yindex++){
-                    for(let index = 0; index <73; index++){
-                        ctx.beginPath();
-                        ctx.rect(x+(index*20),y,20,20);
-                        ctx.stroke();
-                        ctx.fillStyle = index%2 ? fcolor : scolor;
-                        ctx.fill();
-                    }
-                    y = (yindex*20);
-                    supp = fcolor;
-                    fcolor = scolor;
-                    scolor = supp;
+            //Creacion de objetos del mapa
+            let player = new Player(400,200,20,20);
+
+            //Graficos
+            //Variables del dibujado jugador/pacman
+            let radio = 50, x = 0, y = 0;
+            let iterator = 0;
+            let mouthAngle = 0; // Initial mouth angle
+            let mouthFlag = false; // Flag to control mouth opening/closing
+            let direction = 0;
+
+            function animacionPacman() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas
+
+                //Circulo de pacman
+                ctx.beginPath();
+                x = player.getX + radio;
+                y = player.getY + radio;
+                ctx.moveTo(x, y);
+
+                //Angulo de la boca
+                const mouthRadians = (mouthAngle * Math.PI) / 180;
+
+                let startAngle, endAngle;
+
+                if (direction === 90) { // Up
+                    startAngle = (Math.PI * 1.5) + (mouthRadians / 2);
+                    endAngle = (Math.PI * 1.5) - (mouthRadians / 2);
+                } else if (direction === 270) { // Down
+                    startAngle = (Math.PI * 0.5) + (mouthRadians / 2);
+                    endAngle = (Math.PI * 0.5) - (mouthRadians / 2);
+                } else { // Left or Right
+                    startAngle = (mouthRadians / 2) + (direction * Math.PI) / 180;
+                    endAngle = (2 * Math.PI) - ((mouthRadians / 2) + (direction * Math.PI) / 180);
                 }
+
+                //Boca
+                ctx.arc(x, y, radio, startAngle, endAngle); 
+                ctx.lineTo(x, y); 
+                ctx.fillStyle = "yellow"; 
+                ctx.fill();
+
+                //Abrir o cerrar la boca
+                if (!mouthFlag) {
+                    mouthAngle += 1;
+                    if (mouthAngle >= 90) {
+                        mouthFlag = true;
+                    }
+                } else {
+                    mouthAngle -= 1;
+                    if (mouthAngle <= 0) {
+                        mouthFlag = false;
+                    }
+                }
+
+                requestAnimationFrame(animacionPacman); 
             }
+
+            animacionPacman();
+
 
             //Controles del jugador
-            let fotogramasPorSegundo = 4;
+            /*let fotogramasPorSegundo = 4;
+            let contadorDeFrames = 0;
             function Animacion() {
                 setTimeout(function() {
                     window.requestAnimationFrame(Animacion);
-                    console.log("Hola");
+                    contadorDeFrames++;
+                    console.log("Frames: "+contadorDeFrames);
                 }, 1000 / fotogramasPorSegundo);
             }
 
-            Animacion();
-            tablero();
+            Animacion();*/
         </script>
     </body>
 </html>

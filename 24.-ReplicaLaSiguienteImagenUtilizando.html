@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <canvas id="myCanvas" width="1200" height="800" style="border: 2px solid black"></canvas>
+    <script>
+        //Varibles de control de Canvas
+        const canvas = document.getElementById("myCanvas");
+        const ctx = canvas.getContext("2d");
+
+        //Colores
+        let firstGrassGreen = "rgb(128,224,0)";
+        let secondGrassGreen = "rgb(64,160,0)";
+        let thirdGrassGreen = "rgb(0,96,0)";
+        let patternFirstColor = "rgb(91,28,0)";
+        let patternSecondColor = "rgb(192,96,0)";
+        let skyColor = "rgb(32,0,160)";
+        let palmColor = "rgb(128,64,0)";
+        let palmSheetColor = "rgb(128,224,0)";
+
+        //Cielo Azul fuerte
+        ctx.beginPath();
+        ctx.fillStyle = skyColor;
+        ctx.rect(0,0,1200,600);
+        ctx.fill();
+        //Piso patron de cuadros
+        let aux, tamanoCuadro = 40;
+        function dibujarPatronDeCuadros(){
+            for(let y = 0; y < (140/tamanoCuadro); y++){
+                aux = patternFirstColor;
+                patternFirstColor = patternSecondColor;
+                patternSecondColor = aux;
+                for(let x = 0; x < (1200/tamanoCuadro); x++){
+                    ctx.beginPath();
+                    ctx.fillStyle = x%2 ? patternFirstColor : patternSecondColor;
+                    ctx.rect(0+(x*tamanoCuadro),660+(tamanoCuadro*y),tamanoCuadro,tamanoCuadro);
+                    ctx.fill();
+                }
+            }
+        }
+        dibujarPatronDeCuadros();
+        //Piso pasto
+        ctx.beginPath();
+        ctx.fillStyle = firstGrassGreen;
+        ctx.rect(0,600,1200,50);
+        ctx.fill();
+        ctx.beginPath();
+        ctx.fillStyle = secondGrassGreen;
+        ctx.rect(0,620,1200,50);
+        ctx.fill();
+        ctx.beginPath();
+        ctx.fillStyle = thirdGrassGreen;
+        ctx.rect(0,640,1200,40);
+        ctx.fill();
+        //Sombra
+        ctx.beginPath();
+        ctx.fillStyle = "rgb(0,0,0,0.5)";
+        ctx.rect(0,680,1200,30);
+        ctx.fill();
+        //Palmera
+        let angulo = 0;
+        let direccion = 2;
+        let _nhojas2 = 0;
+        //Hay que hacer un random para el numero de hojas de la palma que demos para que haya mas variedad
+        
+        function palmera(_x,_alturaoPalo,_grosor,_color,_nhojas){
+            //Palo de la Palmera
+            ctx.beginPath();
+            ctx.fillStyle = _color;
+            ctx.rect(_x,canvas.height  - _alturaoPalo - 200,_grosor, _alturaoPalo);
+            ctx.fill();
+            for(let times = 0; times < 3; times++){
+                for(let it = 0; it<4; it++){
+                    angulo = Math.floor(Math.random() * (40 - 20 + 1) + 20);
+                    _nhojas2 = Math.floor(Math.random() * (_nhojas - 0 + 1) + 0);
+                    direccion = it%2 ? 2 : -2;
+                    for(let i = 0; i<_nhojas; i++){
+                        ctx.beginPath();
+                        ctx.strokeStyle = palmSheetColor;  
+                        ctx.arc(_x + 40 + (i*direccion) + times*10, (canvas.height  - _alturaoPalo - 200 - (times*20)) + (i*i/angulo), 20, 4.4, i%2 ? true: false);
+                        ctx.stroke();
+                    }
+                }
+            }
+            for(let times = 0; times < 3; times++){
+                for(let it = 0; it<22; it++){
+                    angulo = Math.floor(Math.random() * (40 - 20 + 1) + 20);
+                    _nhojas2 = Math.floor(Math.random() * (_nhojas - 0 + 1) + 0);
+                    direccion = it%2 ? 2 : -2;
+                    for(let i = 0; i<_nhojas; i++){
+                        ctx.beginPath();
+                        ctx.strokeStyle = palmSheetColor;  
+                        ctx.arc(_x + 40 + (i*direccion) - times*40, (canvas.height  - _alturaoPalo - 200 - (times*20)) + (i*i/angulo), 20, 4.4, i%2 ? true: false);
+                        ctx.stroke();
+                    }
+                }
+            }
+        }
+        palmera(200,320,20,palmColor,50);
+        palmera(700,520,20,palmColor,70);
+        palmera(1100,200,20,palmColor,40);
+
+        function anillo(_x, _diametro, _color){
+            ctx.beginPath();
+            ctx.lineWidth = 4;
+            ctx.strokeStyle = _color;
+            ctx.arc(_x, (canvas.height - 300), _diametro, 2*Math.PI, false);
+            ctx.stroke();
+        }
+        for (let index = 0; index < 4; index++) {
+            anillo(320 + (index * 120), 35, "yellow");
+        }
+        anillo(320 + (700), 35, "yellow");
+        
+        function girasol(_x, _alturaoPalo){
+            ctx.beginPath();
+            ctx.fillStyle = "yellow";
+            const circleCount = 10; 
+            const radius = 30; 
+            for (let i = 0; i < circleCount + circleCount + 10; i++) {
+                const angle = (i * Math.PI) / circleCount;
+                const x = _x + 4 + Math.cos(angle) * radius;
+                const y = (canvas.height - _alturaoPalo - 200) + Math.sin(angle) * radius -10;
+                ctx.arc(x, y, radius, 0, Math.PI, false);
+                ctx.stroke();
+            }
+
+            ctx.beginPath();
+            ctx.fillStyle = "rgb(64,96,64)";
+            ctx.rect(_x,canvas.height  - _alturaoPalo - 200,10, _alturaoPalo);
+            ctx.fill();
+
+            ctx.beginPath();
+            ctx.fillStyle = "brown"
+            ctx.arc(_x + 4, (canvas.height  - _alturaoPalo - 200), 40, 2*Math.PI, false);
+            ctx.fill();
+            
+        }
+        girasol(850, 120);
+    </script>
+</body>
+</html>
