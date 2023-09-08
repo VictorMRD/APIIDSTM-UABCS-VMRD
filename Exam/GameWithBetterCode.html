@@ -12,21 +12,36 @@
             const canvas = document.getElementById("myCanvas");
             const ctx = canvas.getContext("2d");    
             
-
+            // Fondo de Pantalla
+            function fondoNegro(){
+                ctx.beginPath();
+                ctx.fillStyle = "black";
+                ctx.rect(0,0,1200,800);
+                ctx.fill();
+            }
             //Agregar detector de teclas 
+            let moveX = 0, moveY = 0, velocidad = 0.2; 
             document.addEventListener("keydown", (e) =>{
                 console.log(e.keyCode);
                 switch (event.key) {
                     case "w":
                         direction = 90; // Up
+                        moveX = 0;
+                        moveY = -velocidad;
                         break;
                     case "a":
+                        moveY = 0;
+                        moveX = -velocidad;
                         direction = 180; // Left
                         break;
                     case "s":
+                        moveX = 0;
+                        moveY = velocidad;
                         direction = 270; // Down
                         break;
                     case "d":
+                        moveY = 0;
+                        moveX = velocidad;
                         direction = 0; // Right
                         break;
                 }
@@ -69,8 +84,15 @@
                 }
             }
             class Player extends DetectionParam{
-                constructor(_x,_y,_width,_height){
+                constructor(_x,_y,_width,_height, _rad){
                     super(_x,_y,_width,_height);
+                    this.rad = _rad;
+                }
+                get getRad(){
+                    return this.rad;
+                }
+                set setRad(_rad){
+                    this.rad = _rad;
                 }
             }
             class Wall extends DetectionParam{
@@ -80,77 +102,105 @@
             }
 
             //Creacion de objetos del mapa
-            let player = new Player(400,200,20,20);
+            let player = new Player(400,200,20,20,20);
 
             //Graficos
             //Variables del dibujado jugador/pacman
-            let radio = 50, x = 0, y = 0;
+            let radio = 20, x = 0, y = 0;
             let iterator = 0;
             let mouthAngle = 0; // Initial mouth angle
-            let mouthFlag = false; // Flag to control mouth opening/closing
-            let direction = 0;
+            let bocaFlag = false;             
+            let direction = null;
 
+            //Animación y movimiento del pacman
             function animacionPacman() {
-                ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas
-
                 //Circulo de pacman
                 ctx.beginPath();
-                x = player.getX + radio;
-                y = player.getY + radio;
+                x = player.getX + player.getRad;
+                y = player.getY + player.getRad;
                 ctx.moveTo(x, y);
 
                 //Angulo de la boca
-                const mouthRadians = (mouthAngle * Math.PI) / 180;
+                const mouthRadians = (mouthAngle * Math.PI) / 260;
 
                 let startAngle, endAngle;
 
-                if (direction === 90) { // Up
+                if (direction === 90) { // Arriba
                     startAngle = (Math.PI * 1.5) + (mouthRadians / 2);
                     endAngle = (Math.PI * 1.5) - (mouthRadians / 2);
-                } else if (direction === 270) { // Down
+                } else if (direction === 270) { // Abajo
                     startAngle = (Math.PI * 0.5) + (mouthRadians / 2);
                     endAngle = (Math.PI * 0.5) - (mouthRadians / 2);
-                } else { // Left or Right
+                } else { // Izquierda - Derecha
                     startAngle = (mouthRadians / 2) + (direction * Math.PI) / 180;
                     endAngle = (2 * Math.PI) - ((mouthRadians / 2) + (direction * Math.PI) / 180);
                 }
 
                 //Boca
-                ctx.arc(x, y, radio, startAngle, endAngle); 
+                ctx.arc(x, y, player.getRad, startAngle, endAngle); 
                 ctx.lineTo(x, y); 
                 ctx.fillStyle = "yellow"; 
                 ctx.fill();
 
                 //Abrir o cerrar la boca
-                if (!mouthFlag) {
-                    mouthAngle += 1;
+                if (!bocaFlag) {
+                    mouthAngle += 0.3;
                     if (mouthAngle >= 90) {
-                        mouthFlag = true;
+                        bocaFlag = true;
                     }
                 } else {
-                    mouthAngle -= 1;
+                    mouthAngle -= 0.3;
                     if (mouthAngle <= 0) {
-                        mouthFlag = false;
+                        bocaFlag = false;
                     }
                 }
-
-                requestAnimationFrame(animacionPacman); 
+                
+                //Mover al jugador
+                player.x += moveX;
+                player.y += moveY;
             }
 
-            animacionPacman();
+            //Variables para dibujar secciones de pared
+            let altura = 14, anchura = 50, grosorLinea = 8;
+            function cuerpoRectangulo(_x,_y,_orientacion){
+                ctx.beginPath();
+                ctx.fillStyle = "black";
+                ctx.rect(_x,_y,anchura,altura);
+                ctx.fill();
 
+                ctx.beginPath();
+                ctx.moveTo(_x,_y);
+                ctx.lineWidth = grosorLinea;
+                ctx.lineTo(_x+anchura,_y);
+                ctx.stroke();
 
-            //Controles del jugador
-            /*let fotogramasPorSegundo = 4;
-            let contadorDeFrames = 0;
+                ctx.beginPath();
+                ctx.strokeStyle = "blue";
+                ctx.moveTo(_x,_y+altura);
+                ctx.lineTo(_x+anchura,_y+altura);
+                ctx.stroke();
+            }   
+
+            function detectorColisiones(_player){
+
+            }
+
             function Animacion() {
                 setTimeout(function() {
                     window.requestAnimationFrame(Animacion);
-                    contadorDeFrames++;
-                    console.log("Frames: "+contadorDeFrames);
-                }, 1000 / fotogramasPorSegundo);
+                    fondoNegro();
+                    for(let i = 0; i<(1200-anchura*2)/anchura; i++){
+                        cuerpoRectangulo(anchura + (i*anchura),10,1);
+                    }
+                    animacionPacman();
+                    Animacion();
+                }, 20);
             }
+            Animacion();
 
+
+            //Controles del jugador
+            /*
             Animacion();*/
         </script>
     </body>

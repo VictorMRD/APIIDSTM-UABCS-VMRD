@@ -124,7 +124,7 @@
             for (let i = 0; i < circleCount + circleCount + 10; i++) {
                 const angle = (i * Math.PI) / circleCount;
                 const x = _x + 4 + Math.cos(angle) * radius;
-                const y = (canvas.height - _alturaoPalo - 200) + Math.sin(angle) * radius -10;
+                const y = (canvas.height - _alturaoPalo - 200) + Math.sin(angle) * radius -10   ;
                 ctx.arc(x, y, radius, 0, Math.PI, false);
                 ctx.stroke();
             }
