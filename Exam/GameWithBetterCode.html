@@ -144,12 +144,12 @@
 
                 //Abrir o cerrar la boca
                 if (!bocaFlag) {
-                    mouthAngle += 0.3;
+                    mouthAngle += 1;
                     if (mouthAngle >= 90) {
                         bocaFlag = true;
                     }
                 } else {
-                    mouthAngle -= 0.3;
+                    mouthAngle -= 1;
                     if (mouthAngle <= 0) {
                         bocaFlag = false;
                     }
@@ -194,7 +194,7 @@
                     }
                     animacionPacman();
                     Animacion();
-                }, 20);
+                }, 1);
             }
             Animacion();
 
