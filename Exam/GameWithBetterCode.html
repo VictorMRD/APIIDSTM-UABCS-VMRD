@@ -161,26 +161,49 @@
             }
 
             //Variables para dibujar secciones de pared
-            let altura = 14, anchura = 50, grosorLinea = 8;
+            let altura = 14, anchura = 50, alturav = 50, anchurav = 14, grosorLinea = 8;
             function cuerpoRectangulo(_x,_y,_orientacion){
                 ctx.beginPath();
-                ctx.fillStyle = "black";
-                ctx.rect(_x,_y,anchura,altura);
+                ctx.fillStyle = "yellow";
+                if(_orientacion == 1)
+                    ctx.rect(_x,_y,anchura,altura);
+                else
+                    ctx.rect(_x,_y,anchurav,alturav);
                 ctx.fill();
 
                 ctx.beginPath();
-                ctx.moveTo(_x,_y);
                 ctx.lineWidth = grosorLinea;
-                ctx.lineTo(_x+anchura,_y);
+                if(_orientacion == 1){
+                    ctx.moveTo(_x,_y);
+                    ctx.lineTo(_x+anchura,_y);
+                }else{
+                    ctx.moveTo(_x+anchurav,_y);
+                    ctx.lineTo(_x+anchurav,_y+anchurav);
+                }
                 ctx.stroke();
 
                 ctx.beginPath();
                 ctx.strokeStyle = "blue";
-                ctx.moveTo(_x,_y+altura);
-                ctx.lineTo(_x+anchura,_y+altura);
+                if(_orientacion == 1){
+                    ctx.moveTo(_x,_y+altura);
+                    ctx.lineTo(_x+anchura,_y+altura);
+                }else{
+                    ctx.moveTo(_x,_y);
+                    ctx.lineTo(_x,_y+anchurav);
+                }
                 ctx.stroke();
             }   
-
+            function dibujarEscenario(){
+                for(let i = 0; i<(1200-anchura*2)/anchura; i++){
+                    cuerpoRectangulo(anchura + (i*anchura),10,1);
+                }
+                for(let i = 0; i<(1200-anchura*2)/anchura; i++){
+                    cuerpoRectangulo(anchura + (i*anchura),775,1);
+                }
+                for(let i = 0; i<(820-anchura*2)/anchura; i++){
+                    cuerpoRectangulo(0, 20 + (i*anchura),2);
+                }
+            }
             function detectorColisiones(_player){
 
             }
@@ -189,9 +212,7 @@
                 setTimeout(function() {
                     window.requestAnimationFrame(Animacion);
                     fondoNegro();
-                    for(let i = 0; i<(1200-anchura*2)/anchura; i++){
-                        cuerpoRectangulo(anchura + (i*anchura),10,1);
-                    }
+                    dibujarEscenario();
                     animacionPacman();
                     Animacion();
                 }, 1);
