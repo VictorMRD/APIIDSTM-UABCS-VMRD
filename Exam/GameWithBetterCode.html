@@ -19,30 +19,35 @@
                 ctx.rect(0,0,1200,800);
                 ctx.fill();
             }
+
             //Agregar detector de teclas 
-            let moveX = 0, moveY = 0, velocidad = 0.2; 
+            let moveX = 0, moveY = 0, velocidad = 4; 
+            let collisionIndex;
             document.addEventListener("keydown", (e) =>{
                 console.log(e.keyCode);
-                switch (event.key) {
-                    case "w":
+                switch (e.keyCode) {
+                    case 87:
                         direction = 90; // Up
                         moveX = 0;
                         moveY = -velocidad;
                         break;
-                    case "a":
+                    case 65:
                         moveY = 0;
                         moveX = -velocidad;
                         direction = 180; // Left
                         break;
-                    case "s":
+                    case 83:
                         moveX = 0;
                         moveY = velocidad;
                         direction = 270; // Down
                         break;
-                    case "d":
+                    case 68:
                         moveY = 0;
                         moveX = velocidad;
                         direction = 0; // Right
+                        break;
+                    case 32:
+                        destruirMuro(collisionIndex);
                         break;
                 }
             })
@@ -114,6 +119,12 @@
 
             //Animación y movimiento del pacman
             function animacionPacman() {
+                //Caja de pacman
+                // ctx.fillStyle = "red";
+                // ctx.beginPath();
+                // ctx.rect(player.getX, player.getY,player.getWidth*2,player.getHeight*2);
+                // ctx.fill();
+
                 //Circulo de pacman
                 ctx.beginPath();
                 x = player.getX + player.getRad;
@@ -144,12 +155,12 @@
 
                 //Abrir o cerrar la boca
                 if (!bocaFlag) {
-                    mouthAngle += 1;
+                    mouthAngle += 10;
                     if (mouthAngle >= 90) {
                         bocaFlag = true;
                     }
                 } else {
-                    mouthAngle -= 1;
+                    mouthAngle -= 10;
                     if (mouthAngle <= 0) {
                         bocaFlag = false;
                     }
@@ -161,14 +172,29 @@
             }
 
             //Variables para dibujar secciones de pared
-            let altura = 14, anchura = 50, alturav = 50, anchurav = 14, grosorLinea = 8;
+            let altura = 14, anchura = 50, alturav = 50, anchurav = 14, grosorLinea = 8, walls = [];
+            let createFlag = false;
+            let _indexx = 0;
             function cuerpoRectangulo(_x,_y,_orientacion){
                 ctx.beginPath();
                 ctx.fillStyle = "yellow";
-                if(_orientacion == 1)
-                    ctx.rect(_x,_y,anchura,altura);
-                else
-                    ctx.rect(_x,_y,anchurav,alturav);
+                if(_orientacion == 1){
+                    if(!createFlag)
+                        walls[_indexx] = (new Wall(_x,_y,anchura,altura+4));
+                    
+                    if(walls[_indexx] != 9999)
+                        ctx.rect(walls[_indexx].getX,walls[_indexx].getY,anchura,altura+4);
+                    else 
+                        return;
+                }
+                else{
+                    if(!createFlag)
+                        walls[_indexx] = (new Wall(_x, _y,anchurav+2, alturav));
+                    if(walls[_indexx] != 9999)
+                        ctx.rect(walls[_indexx].getX,walls[_indexx].getY,anchurav,alturav);
+                    else 
+                        return;
+                }
                 ctx.fill();
 
                 ctx.beginPath();
@@ -178,7 +204,7 @@
                     ctx.lineTo(_x+anchura,_y);
                 }else{
                     ctx.moveTo(_x+anchurav,_y);
-                    ctx.lineTo(_x+anchurav,_y+anchurav);
+                    ctx.lineTo(_x+anchurav,_y+alturav);
                 }
                 ctx.stroke();
 
@@ -189,40 +215,160 @@
                     ctx.lineTo(_x+anchura,_y+altura);
                 }else{
                     ctx.moveTo(_x,_y);
-                    ctx.lineTo(_x,_y+anchurav);
+                    ctx.lineTo(_x,_y+alturav);
                 }
                 ctx.stroke();
+                _indexx += 1;
             }   
+            
+            //dibujar esquinas redondas en el mapa
+            function esquinas(_x, _y){
+                //esquina superior izquierda
+                ctx.beginPath();
+                ctx.arc(_x+10,_y+19,20,0,Math.PI*2, true);
+                ctx.stroke();
+
+                ctx.beginPath();
+                ctx.rect(_x+4,_y+4,80,80);
+                ctx.fill();
+
+                ctx.beginPath();
+                ctx.arc(_x+21,_y+28,20,0,Math.PI*2, true);
+                ctx.stroke();
+
+                ctx.beginPath();
+                ctx.fillStyle = "black";
+                ctx.rect(_x+8,_y+10,80,80);
+                ctx.fill();
+                
+                //Esquina inferior izquierda
+                ctx.beginPath();
+                ctx.arc(_x+10,_y+760,20,0,Math.PI*2, true);
+                ctx.stroke();
+
+                ctx.beginPath();
+                ctx.rect(_x+4,_y+734,40,40);
+                ctx.fill();
+
+                ctx.beginPath();
+                ctx.arc(_x+19,_y+748,20,0,Math.PI*2, true);
+                ctx.stroke();
+
+                ctx.beginPath();
+                ctx.fillStyle = "black";
+                ctx.rect(_x+8,_y+710,80,80);
+                ctx.fill();
+
+                //Esquina superior derecha
+                ctx.beginPath();
+                ctx.arc(_x+1149,_y+19,20,0,Math.PI*2, true);
+                ctx.stroke();
+
+                ctx.beginPath();
+                ctx.rect(_x+1080,_y+8,80,80);
+                ctx.fill();
+                
+                //Esquina inferior derecha
+                ctx.beginPath();
+                ctx.arc(_x+1149,_y+760,20,0,Math.PI*2, true);
+                ctx.stroke();
+
+                ctx.beginPath();
+                ctx.rect(_x+1080,_y+688,80,80);
+                ctx.fill();
+            }
+
+            //Cambiar a crear muros
             function dibujarEscenario(){
-                for(let i = 0; i<(1200-anchura*2)/anchura; i++){
-                    cuerpoRectangulo(anchura + (i*anchura),10,1);
+                _indexx = 0;
+                esquinas(20,10);
+
+                //Apertura en la pared de arriba
+                for(let i = 0; i<(1220-anchura*2)/anchura; i++){
+                    if(i != 11 && i != 10){
+                        cuerpoRectangulo(anchura + (i*anchura)-22,10,1);
+                    }
                 }
-                for(let i = 0; i<(1200-anchura*2)/anchura; i++){
-                    cuerpoRectangulo(anchura + (i*anchura),775,1);
+                //Apertura en la parte de abajo
+                for(let i = 0; i<(1220-anchura*2)/anchura; i++){
+                    
+                    if(i != 11 && i != 10){
+                        cuerpoRectangulo(anchura + (i*anchura)-22,775,1);
+                    }
                 }
+                //Pared vertical izquierda
                 for(let i = 0; i<(820-anchura*2)/anchura; i++){
-                    cuerpoRectangulo(0, 20 + (i*anchura),2);
+                    
+                    if(i != 6 && i != 7){
+                        cuerpoRectangulo(10, 24 + (i*anchura),2);
+                    }
                 }
+                //Pared vertical derecha
+                for(let i = 0; i<(820-anchura*2)/anchura; i++){
+                    
+                    if(i != 6 && i != 7){
+                        cuerpoRectangulo(1175, 24 + (i*anchura),2);
+                    }
+                }
+                createFlag = true;
+            }
+            function cambioDeLugarMapa(_player){
+                if(_player.getY + _player.getHeight < 0)
+                    _player.y = 790
+                if(_player.getY > 790)
+                    _player.y = 0;
+                if(_player.getX + _player.getWidth < -20)
+                    _player.x = 1200
+                if(_player.getX > 1200)
+                    _player.x = -20;
             }
             function detectorColisiones(_player){
-
+                for (let index = 0; index < walls.length; index++) {
+                    
+                    if(_player.getX < walls[index].getX + walls[index].getWidth && _player.getX + _player.getWidth*2 > walls[index].getX
+                    && _player.getY < walls[index].getY + walls[index].getHeight && _player.getY + _player.getHeight*2 > walls[index].getY){
+                        console.log("Colision");
+                        collisionIndex = index;
+                        console.log(collisionIndex);
+                        if (direction === 90) { // Arriba
+                            player.y +=5;
+                        } else if (direction === 270) { // Abajo
+                            player.y -=5;
+                        } else if(direction == 180){ // Izquierda 
+                            player.x +=5;
+                        }else { // Derecha
+                            player.x -=5;
+                        }
+                        moveX = 0;
+                        moveY = 0;
+                    }   
+                }
+            }
+            
+            //Destruir Muro en colision
+            function destruirMuro(_index){
+                walls[_index].setX = 9999;
             }
 
+            var ultimoCuadro = 0, fps = 60; 
             function Animacion() {
-                setTimeout(function() {
-                    window.requestAnimationFrame(Animacion);
+                var ahora = Date.now();
+                var tiempoTranscurrido = ahora - ultimoCuadro;
+                var intervaloCuadro = 1000 / fps; 
+
+                if (tiempoTranscurrido > intervaloCuadro) {
+                    ultimoCuadro = ahora - (tiempoTranscurrido % intervaloCuadro);
+                    cambioDeLugarMapa(player);
                     fondoNegro();
                     dibujarEscenario();
                     animacionPacman();
-                    Animacion();
-                }, 1);
+                    detectorColisiones(player);
+                }
+
+                window.requestAnimationFrame(Animacion);
             }
+            console.log(walls);
             Animacion();
-
-
-            //Controles del jugador
-            /*
-            Animacion();*/
         </script>
     </body>
 </html>
