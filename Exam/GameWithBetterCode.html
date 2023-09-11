@@ -11,7 +11,6 @@
         <script>
             const canvas = document.getElementById("myCanvas");
             const ctx = canvas.getContext("2d");    
-            
             // Fondo de Pantalla
             function fondoNegro(){
                 ctx.beginPath();
@@ -22,32 +21,43 @@
 
             //Agregar detector de teclas 
             let moveX = 0, moveY = 0, velocidad = 4; 
-            let collisionIndex;
+            let collisionIndex, lastMovement;
             document.addEventListener("keydown", (e) =>{
-                console.log(e.keyCode);
                 switch (e.keyCode) {
                     case 87:
                         direction = 90; // Up
                         moveX = 0;
                         moveY = -velocidad;
+                        lastMovement = 87;
                         break;
                     case 65:
                         moveY = 0;
                         moveX = -velocidad;
-                        direction = 180; // Left
+                        direction = 180; // Left7
+                        lastMovement = 65;
                         break;
                     case 83:
                         moveX = 0;
                         moveY = velocidad;
                         direction = 270; // Down
+                        lastMovement = 83;
                         break;
                     case 68:
                         moveY = 0;
                         moveX = velocidad;
                         direction = 0; // Right
+                        lastMovement = 68;
                         break;
                     case 32:
                         destruirMuro(collisionIndex);
+                        if(lastMovement == 68)
+                            moveX = velocidad;
+                        else if(lastMovement == 87)
+                            moveY = -velocidad;
+                        else if(lastMovement == 65)
+                            moveX = -velocidad;
+                        else
+                            moveY = velocidad;
                         break;
                 }
             })
@@ -175,25 +185,31 @@
             let altura = 14, anchura = 50, alturav = 50, anchurav = 14, grosorLinea = 8, walls = [];
             let createFlag = false;
             let _indexx = 0;
-            function cuerpoRectangulo(_x,_y,_orientacion){
+            function cuerpoRectangulo(_x,_y,_orientacion,_agujero){
                 ctx.beginPath();
                 ctx.fillStyle = "yellow";
                 if(_orientacion == 1){
                     if(!createFlag)
                         walls[_indexx] = (new Wall(_x,_y,anchura,altura+4));
                     
-                    if(walls[_indexx] != 9999)
-                        ctx.rect(walls[_indexx].getX,walls[_indexx].getY,anchura,altura+4);
-                    else 
+                    if(walls[_indexx].getX == 9999){
+                        _indexx++;
                         return;
+                    }else 
+                        ctx.rect(walls[_indexx].getX,walls[_indexx].getY,anchura,altura+4);
                 }
                 else{
                     if(!createFlag)
                         walls[_indexx] = (new Wall(_x, _y,anchurav+2, alturav));
-                    if(walls[_indexx] != 9999)
-                        ctx.rect(walls[_indexx].getX,walls[_indexx].getY,anchurav,alturav);
-                    else 
+
+                    if(walls[_indexx].getX == 9999){
+                        console.log(_indexx);
+                        console.log(walls[_indexx].getX);
+                        _indexx++;
                         return;
+                    }else 
+                        ctx.rect(walls[_indexx].getX,walls[_indexx].getY,anchurav,alturav);
+                       
                 }
                 ctx.fill();
 
@@ -220,94 +236,50 @@
                 ctx.stroke();
                 _indexx += 1;
             }   
-            
-            //dibujar esquinas redondas en el mapa
-            function esquinas(_x, _y){
-                //esquina superior izquierda
-                ctx.beginPath();
-                ctx.arc(_x+10,_y+19,20,0,Math.PI*2, true);
-                ctx.stroke();
-
-                ctx.beginPath();
-                ctx.rect(_x+4,_y+4,80,80);
-                ctx.fill();
-
-                ctx.beginPath();
-                ctx.arc(_x+21,_y+28,20,0,Math.PI*2, true);
-                ctx.stroke();
-
-                ctx.beginPath();
-                ctx.fillStyle = "black";
-                ctx.rect(_x+8,_y+10,80,80);
-                ctx.fill();
-                
-                //Esquina inferior izquierda
-                ctx.beginPath();
-                ctx.arc(_x+10,_y+760,20,0,Math.PI*2, true);
-                ctx.stroke();
-
-                ctx.beginPath();
-                ctx.rect(_x+4,_y+734,40,40);
-                ctx.fill();
-
-                ctx.beginPath();
-                ctx.arc(_x+19,_y+748,20,0,Math.PI*2, true);
-                ctx.stroke();
-
-                ctx.beginPath();
-                ctx.fillStyle = "black";
-                ctx.rect(_x+8,_y+710,80,80);
-                ctx.fill();
-
-                //Esquina superior derecha
-                ctx.beginPath();
-                ctx.arc(_x+1149,_y+19,20,0,Math.PI*2, true);
-                ctx.stroke();
-
-                ctx.beginPath();
-                ctx.rect(_x+1080,_y+8,80,80);
-                ctx.fill();
-                
-                //Esquina inferior derecha
-                ctx.beginPath();
-                ctx.arc(_x+1149,_y+760,20,0,Math.PI*2, true);
-                ctx.stroke();
-
-                ctx.beginPath();
-                ctx.rect(_x+1080,_y+688,80,80);
-                ctx.fill();
-            }
 
             //Cambiar a crear muros
             function dibujarEscenario(){
                 _indexx = 0;
-                esquinas(20,10);
 
                 //Apertura en la pared de arriba
                 for(let i = 0; i<(1220-anchura*2)/anchura; i++){
                     if(i != 11 && i != 10){
-                        cuerpoRectangulo(anchura + (i*anchura)-22,10,1);
+                        cuerpoRectangulo(anchura + (i*anchura)-22,10,1,true);
                     }
                 }
                 //Apertura en la parte de abajo
                 for(let i = 0; i<(1220-anchura*2)/anchura; i++){
                     
                     if(i != 11 && i != 10){
-                        cuerpoRectangulo(anchura + (i*anchura)-22,775,1);
+                        cuerpoRectangulo(anchura + (i*anchura)-22,775,1,true);
                     }
                 }
                 //Pared vertical izquierda
                 for(let i = 0; i<(820-anchura*2)/anchura; i++){
                     
                     if(i != 6 && i != 7){
-                        cuerpoRectangulo(10, 24 + (i*anchura),2);
+                        cuerpoRectangulo(10, 24 + (i*anchura),2,true);
                     }
                 }
                 //Pared vertical derecha
                 for(let i = 0; i<(820-anchura*2)/anchura; i++){
                     
                     if(i != 6 && i != 7){
-                        cuerpoRectangulo(1175, 24 + (i*anchura),2);
+                        cuerpoRectangulo(1175, 24 + (i*anchura),2,true);
+                    }
+                }
+
+                //centro
+                for(let i = 0; i<(700-anchura*2)/anchura; i++){
+                    cuerpoRectangulo(78, 124 + (i*anchura),2,false);
+                }
+                for(let i = 0; i<(700-anchura*2)/anchura; i++){
+                    if(i != 4 && i !=5)
+                        cuerpoRectangulo(142, 171 + (i*anchura),2,false);
+                }
+                for(let i = 0; i<(1220-anchura*2)/anchura; i++){
+                    if(i != 11 && i != 10){
+                        cuerpoRectangulo(anchura + (i*anchura)-22,775,1,true);
                     }
                 }
                 createFlag = true;
@@ -324,12 +296,9 @@
             }
             function detectorColisiones(_player){
                 for (let index = 0; index < walls.length; index++) {
-                    
                     if(_player.getX < walls[index].getX + walls[index].getWidth && _player.getX + _player.getWidth*2 > walls[index].getX
                     && _player.getY < walls[index].getY + walls[index].getHeight && _player.getY + _player.getHeight*2 > walls[index].getY){
-                        console.log("Colision");
                         collisionIndex = index;
-                        console.log(collisionIndex);
                         if (direction === 90) { // Arriba
                             player.y +=5;
                         } else if (direction === 270) { // Abajo
@@ -347,7 +316,7 @@
             
             //Destruir Muro en colision
             function destruirMuro(_index){
-                walls[_index].setX = 9999;
+                walls[_index].x = 9999;
             }
 
             var ultimoCuadro = 0, fps = 60; 
@@ -367,7 +336,6 @@
 
                 window.requestAnimationFrame(Animacion);
             }
-            console.log(walls);
             Animacion();
         </script>
     </body>

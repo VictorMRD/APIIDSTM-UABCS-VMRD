@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue.js Example</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <h1>Vue.js Example</h1>
+        
+        <div class="form-group">
+            <label for="nameInput">Your Name:</label>
+            <input type="text" id="nameInput" v-model="name">
+        </div>
+        <p>Tu nombre  {{name}}</p>
+
+        <div class="form-group">
+            <label for="num1Input">Number 1:</label>
+            <input type="number" id="num1Input" v-model.number="number1">
+        </div>
+
+        <div class="form-group">
+            <label for="num2Input">Number 2:</label>
+            <input type="number" id="num2Input" v-model.number="number2">
+        </div>
+
+        <div class="result">
+            <p>Result: {{ sum }}</p>
+        </div>
+    </div>
+
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                name: '',
+                number1: 0,
+                number2: 0,
+            },
+            computed: {
+                sum: function () {
+                    return parseInt(this.number1) + parseInt(this.number2);
+                }
+            }
+        });
+    </script>
+</body>
+</html>
