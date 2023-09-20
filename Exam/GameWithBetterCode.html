@@ -187,7 +187,7 @@
             let _indexx = 0;
             function cuerpoRectangulo(_x,_y,_orientacion,_agujero){
                 ctx.beginPath();
-                ctx.fillStyle = "yellow";
+                ctx.fillStyle = "black";
                 if(_orientacion == 1){
                     if(!createFlag)
                         walls[_indexx] = (new Wall(_x,_y,anchura,altura+4));
@@ -274,12 +274,22 @@
                     cuerpoRectangulo(78, 124 + (i*anchura),2,false);
                 }
                 for(let i = 0; i<(700-anchura*2)/anchura; i++){
-                    if(i != 4 && i !=5)
+                    if(i != 10 && i != 9 && i != 4 && i !=5 && i !=6)
                         cuerpoRectangulo(142, 171 + (i*anchura),2,false);
                 }
-                for(let i = 0; i<(1220-anchura*2)/anchura; i++){
+                for(let i = 0; i<(800-anchura*2)/anchura; i++){
                     if(i != 11 && i != 10){
-                        cuerpoRectangulo(anchura + (i*anchura)-22,775,1,true);
+                        cuerpoRectangulo(anchura + (i*anchura)+110,353,1,true);
+                    }
+                }
+                for(let i = 0; i<(800-anchura*2)/anchura; i++){
+                    if(i != 0 && i != 1){
+                        cuerpoRectangulo(anchura + (i*anchura)-12,510,1,true);
+                    }
+                }
+                for(let i = 0; i<(800-anchura*2)/anchura; i++){
+                    if(i != 11 && i != 10){
+                        cuerpoRectangulo(anchura + (i*anchura)+46,430,1,true);
                     }
                 }
                 createFlag = true;
