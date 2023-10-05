@@ -9,40 +9,40 @@
                         <label>Nombre del Usuario</label>
                         <input id="nameName"
                         required ="true"
-                        v-model="formData.name"
+                        v-model="formData.nombre"
                         type="text">
                         <label>Correo</label>
                         <input id="emailInput"
                         required ="true"
-                        v-model="formData.email"
+                        v-model="formData.correo"
                         type="text">
                         <label>Contrasena</label>
                         <input id="passwordInput"
                         required ="true"
-                        v-model="formData.password"
+                        v-model="formData.contrasena"
                         type="password">
                         <br>
                     <button type="submit" class="submitButton" >Agregar Usuario</button>
                     </div>
                 </fieldset>
             </form>
-            <p>Name: {{ formData.name }}</p>
-            <p>Email: {{ formData.email }}</p>
-            <p>Password: {{ formData.password }}</p>
+            <p>Name: {{ formData.nombre }}</p>
+            <p>Email: {{ formData.correo }}</p>
+            <p>Password: {{ formData.contrasena }}</p>
         </div>
     </div>
 </template>
   
 <script>
-
+  import { ref, defineProps, defineEmits } from 'vue';
   export default {
     data() {
       return {  
         mostrar: false,
         formData: {
-            name: '',
-            email: '',
-            password: ''
+            nombre: '',
+            correo: '',
+            contrasena: ''
         }
       }
     },
@@ -53,20 +53,20 @@
         submitForm() {
         // Construir el objeto JSON con los datos del formulario
         const jsonData = {
-            name: this.formData.name,
-            email: this.formData.email,
-            password: this.formData.password
+            nombre: this.formData.nombre,
+            correo: this.formData.correo,
+            contrasena: this.formData.contrasena
         };
             localStorage.setItem('userData', JSON.stringify(jsonData));
             console.log(jsonData);
             this.formData = {
-                name: '',
-                email: '',
-                password: ''
+                nombre: '',
+                correo: '',
+                contrasena: ''
             };
         }
     }
-  }
+  };
 </script>
   
 <style>
