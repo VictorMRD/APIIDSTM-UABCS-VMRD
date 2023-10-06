@@ -8,7 +8,6 @@
     app.use(VueAxios, axios);
 
     export default{
-        name:"MovieList",
         data(){
             return {
                 movieData: null, // Se usa para almacenar la informacion del request realizado
@@ -16,7 +15,8 @@
                 error: null, //Dependiendo del resultado de la solicitud cambia su estado
                 username: '',
                 password: '',
-                requestoken: null
+                requestoken: null,
+                Login: false
             };
         },
         mounted(){
@@ -85,6 +85,11 @@
                     console.error("Error 404.");
                     console.error(error);
                 }) 
+            },
+            showLoginForm(flag){
+                console.log("Hola");
+                this.Login = flag;
+                console.log(this.Login);
             }
         }
     }
@@ -92,7 +97,7 @@
 
 <template>
     <div class="global-container">    
-        <div class="login-container">
+        <div class="login-container" v-if="Login">
             <h1>Login</h1>
             <form @submit.prevent="iniciarSesion">
                 <label>Username</label>
@@ -103,11 +108,15 @@
                 <button type="submit"> Entrar </button>
             </form>
         </div>
+        <div class="menu-options" v-else>
+            <button @click="showLoginForm(true)">Login</button>
+            <button>Register</button>
+        </div>
     </div>
 </template>
 
 <style>
-    .login-container{
+    .login-container, .menu-options{
         background-color: white;
         display: flex;
         justify-content: center;
@@ -120,6 +129,14 @@
         background-color: cadetblue;
         padding: 20px;
     }
+    .menu-options{
+        gap: 20px;
+        height: 100px;
+    }
+    .menu-options button{
+        width: 100%;
+    }
+
     .login-container form{
         display: flex;
         flex-direction: column;
