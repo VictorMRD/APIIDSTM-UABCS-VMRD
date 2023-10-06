@@ -16,10 +16,12 @@
                 username: '',
                 password: '',
                 requestoken: null,
-                Login: false
+                Login: false,
+                SessionKey: ''
             };
         },
         mounted(){
+                console.log("username:"+localStorage.getItem('username'));
                 app.axios.get('https://api.themoviedb.org/3/authentication/token/new',{
                     headers: {
                         'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2YTcxYTExM2RkZGQ4ZDQ3NmU4YjhlMDdkYjgzYmI5ZCIsInN1YiI6IjY1MTlkOTY1MDcyMTY2MDEzOWM1ZDQ4MCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.fvwRaFzNROAhNcfeY1qE_fR1eUi4rKTly4QCrm8u-C4',
@@ -29,20 +31,16 @@
                 .then((resp)=>{
                     //Almacenamos nuestro request token generado para logear al usuario a futuro.
                     this.requestoken = resp.data.request_token;
-                    console.log(this.requestoken);
                     /* Se cambia el estado del Loading para que se muestren los resultados */
                     this.loading = false;
                 })
                 .catch((error) => {
                     // Aqui va el codigo para manejar los errores
                     this.error = "Hubo un error al intentar crear un request token.";
-                    console.error("Error 404.");
-                    console.error(error);
                 })
         },
         methods: {
             iniciarSesion(){
-                console.log("Hola");
                 app.axios.post('https://api.themoviedb.org/3/authentication/token/validate_with_login',{
                 'username': this.username,
                 'password': this.password,
@@ -55,10 +53,7 @@
                     }
                 })
                 .then((resp)=>{
-                    console.warn(resp) //Mostramos lo que nos regresa el respuesta
                     this.movieData = resp.data; //Almacenamos la informacion en una variable local
-                    console.log(this.movieData); // Confirmamos que hayamos guardado correctamente la informacion
-                    console.log(this.movieData.request_token);
                     // Se cambia el estado del Loading para que se muestren los resultados 
                     this.loading = false;
 
@@ -71,9 +66,10 @@
                             },
                         })
                         .then((resp) => {
-                            const sessionData = resp.data;
-                            console.log('Estado de la sesión:', sessionData);
-                            // Aquí puedes verificar el estado de la sesión y tomar acciones en consecuencia
+                            this.SessionKey = resp.data;
+                            console.log(this.SessionKey.session_id);
+                            localStorage.setItem('username', this.username);
+                            this.$router.push('/index/'+this.SessionKey.session_id);
                         })
                         .catch((error) => {
                             console.error('Error al verificar la sesión:', error);
@@ -82,16 +78,16 @@
                 .catch((error) => {
                     // Aqui va el codigo para manejar los errores
                     this.error = "Hubo un error al intentar iniciar sesion.";
-                    console.error("Error 404.");
-                    console.error(error);
                 }) 
             },
             showLoginForm(flag){
-                console.log("Hola");
                 this.Login = flag;
-                console.log(this.Login);
+            },
+            destroySession(){
+                    localStorage.removeItem('username');
             }
         }
+        
     }
 </script>
 
@@ -110,7 +106,7 @@
         </div>
         <div class="menu-options" v-else>
             <button @click="showLoginForm(true)">Login</button>
-            <button>Register</button>
+            <button @click="destroySession">Register</button>
         </div>
     </div>
 </template>

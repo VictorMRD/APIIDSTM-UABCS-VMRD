@@ -1,20 +1,22 @@
 import './assets/main.css'
-
 import { createApp } from 'vue'
-import App from './App.vue'
+import {createRouter, createWebHistory} from "vue-router";
+import Index from './components/MovieCatalogue.vue'
 import Login from './components/Login.vue'
+
+import App from './App.vue'
 
 const routes = [
     { path: '/', component: Login },
-    { path: '/App', component: App },
+    { path: '/login', component: Login },
+    { path: '/index/:sessionKey', component: Index },
 ]
 
-let VueRouter;
-
-const router = VueRouter.createRouter({
-    history: VueRouter.createWebHashHistory(),
+const router = createRouter({
+    history: createWebHistory(),
     routes, 
 })
 
-createApp.use(router)
-createApp(Login).mount('#app')
+const app = createApp(App)
+app.use(router)
+app.mount('#app')
