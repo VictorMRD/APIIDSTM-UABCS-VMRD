@@ -18,9 +18,11 @@
             };
         },
         mounted(){
-            this.SessionKey = this.$route.params.sessionKey;
-            console.log("SessionKey:"+this.SessionKey);
-            console.log("SessionKey:"+this.$route.params.sessionKey);
+            console.log(localStorage.getItem('username'));
+            if(localStorage.getItem('username') === null){
+                console.log("wtf");
+                this.$router.push('/login/');
+            }
             app.axios.get('https://api.themoviedb.org/3/trending/movie/day?api_key=6a71a113dddd8d476e8b8e07db83bb9d')
             .then((resp)=>{
                 console.warn(resp) //Mostramos lo que nos regresa el resp
