@@ -1,0 +1,68 @@
+/* DECLARACION DE VARIABLES GLOBALES */
+@mainColor: lightblue;
+@mainDisplay: flex;
+@mainAlign: center;
+@id : '';
+@total-colores: 5;
+
+@arreglo: #999999, #71a0ff, #ffa84b, #e7d45c, #ec41e7;
+
+.estoEsUnaFuncion{
+    background-color: pink;
+    color: yellow;
+}
+
+.estoEsUnaFuncionConParametros(@color:black){
+    background-color: @color;
+    color: yellow;
+}
+
+.cont(@count) when (@count > 0) {
+    .cont((@count - 1));
+    #r@{count}{
+        background-color: extract(@arreglo,@count);
+    }
+} 
+
+body{
+    background-color: white;
+    display: @mainDisplay;
+    justify-content: @mainAlign;
+    align-items: @mainAlign;
+    flex-direction: column;
+    
+    text-align: center;
+
+    .container{
+        width: 50%;
+        margin: auto;
+    }
+
+    form{
+        background-color: @mainColor;
+
+        fieldset{
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            gap: 5px;
+
+            ul{
+                display: flex;
+                justify-content: center;
+                align-items: start;
+                flex-direction: column;
+            }
+            
+            ul {
+                .cont(5)
+            }
+
+            button{
+                width: 50%;
+            }
+        }
+    }
+    /* .estoEsUnaFuncion() */
+    /* .estoEsUnaFuncionConParametros() */
+}
