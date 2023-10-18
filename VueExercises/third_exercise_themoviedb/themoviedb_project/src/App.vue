@@ -5,9 +5,7 @@
 </script>
 
 <template>
-  <header>
-
-  </header>
+  <header></header>
 
   <main>
     <router-view></router-view>
