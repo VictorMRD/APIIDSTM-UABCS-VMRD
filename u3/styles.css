@@ -1,0 +1,52 @@
+/* DECLARACION DE VARIABLES GLOBALES */
+.estoEsUnaFuncion {
+  background-color: pink;
+  color: yellow;
+}
+body {
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+  /* .estoEsUnaFuncion() */
+  /* .estoEsUnaFuncionConParametros() */
+}
+body .container {
+  width: 50%;
+  margin: auto;
+}
+body form {
+  background-color: lightblue;
+}
+body form fieldset {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 5px;
+}
+body form fieldset ul {
+  display: flex;
+  justify-content: center;
+  align-items: start;
+  flex-direction: column;
+}
+body form fieldset ul #r1 {
+  background-color: #999999;
+}
+body form fieldset ul #r2 {
+  background-color: #71a0ff;
+}
+body form fieldset ul #r3 {
+  background-color: #ffa84b;
+}
+body form fieldset ul #r4 {
+  background-color: #e7d45c;
+}
+body form fieldset ul #r5 {
+  background-color: #ec41e7;
+}
+body form fieldset button {
+  width: 50%;
+}

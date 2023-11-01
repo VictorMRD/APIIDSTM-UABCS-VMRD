@@ -13,10 +13,16 @@
             return {
                 movieData: null, // Se usa para almacenar la informacion del request realizado
                 loading: true, // Se tiene por default en true para mostrar la carga de la solicitud
-                error: null //Dependiendo del resultado de la solicitud cambia su estado
+                error: null, //Dependiendo del resultado de la solicitud cambia su estado
+                SessionKey: '',
             };
         },
         mounted(){
+            console.log(localStorage.getItem('username'));
+            if(localStorage.getItem('username') === null){
+                console.log("wtf");
+                this.$router.push('/login/');
+            }
             app.axios.get('https://api.themoviedb.org/3/trending/movie/day?api_key=6a71a113dddd8d476e8b8e07db83bb9d')
             .then((resp)=>{
                 console.warn(resp) //Mostramos lo que nos regresa el resp

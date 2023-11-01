@@ -1,22 +1,14 @@
 <script>
-  import Catalogue from './components/MovieCatalogue.vue';
-  import Headerr from './components/Header.vue';
   export default{
-    name: "App",
-    components: {
-      Catalogue,
-      Headerr
-    }
+    name: "App"
   }
 </script>
 
 <template>
-  <header>
-    <Headerr />
-  </header>
+  <header></header>
 
   <main>
-    <Catalogue />
+    <router-view></router-view>
   </main>
 </template>
 
