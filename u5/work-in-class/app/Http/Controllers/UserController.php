@@ -8,7 +8,7 @@ class UserController extends Controller
 {
     //
     public function index(){
-        $var = 23;
+        $var = "Victor Rodriguez";
         return view('main', ['var'=>$var]);
     }
 }

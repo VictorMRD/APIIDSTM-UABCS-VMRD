@@ -8,9 +8,15 @@
     <title>Main</title>
 </head>
 <body>
-    <h1>This is the main</h1>
-    <h1>
-        Hola mundo. ¿Cómo estás? {{ $var }}
-    </h1>
+    @if($alumnos instanceof \Illuminate\Support\Collection)
+        {{-- It's a collection --}}
+        @foreach ($alumnos as $alumno)
+            <li>{{ $alumno->nombre }} - {{ $alumno->edad }} years old - {{ $alumno->curso }}</li>
+        @endforeach
+    @else
+        {{-- It's a single model --}}
+        <li>{{ $alumnos->nombre }} - {{ $alumnos->edad }} years old - {{ $alumnos->curso }}</li>
+    @endif
+
 </body>
 </html>

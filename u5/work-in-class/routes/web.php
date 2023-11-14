@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\alumnosController;
 
 /*
 |--------------------------------------------------------------------------
@@ -49,4 +50,6 @@ Route::get('/saludo/{nombre?}/{lastname?}', function (string $nombre ="", $lastn
 
 
 use App\Http\Controllers\UserController;
-Route::get('/users', [UserController::class, 'index']);
+Route::get('/users', [alumnosController::class, 'getAll']);
+
+Route::get('/users/{id}', [alumnosController::class, 'getID']);
